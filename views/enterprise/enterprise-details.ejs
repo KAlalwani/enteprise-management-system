@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1>Enterprise Details</h1>
+    <% if(enterprise.length > 0) { %>
+        <p>Enterprise Name: <%= enterprise[0].name %></p>
+        <p>Features: <%= enterprise[0].features.join(', ') %></p>
+        <p>Roles: <%= enterprise[0].roles.join(', ') %></p>
+        <p>Departments: <%= enterprise[0].departments.join(', ') %></p>
+        <p>Salaried Date: <%= enterprise[0].salariesDate.toDateString() %></p>
+    <% } else { %>
+        <p>No enterprise details available.</p>
+    <% } %>
+    
+</body>
+</html>

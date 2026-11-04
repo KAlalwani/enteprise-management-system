@@ -7,8 +7,39 @@
 </head>
 <body>
     <%- include('./partials/navbar') %>
+    <% if(enterprise) {%>
+    <h1>Welcome <%= enterprise.name %></h1>
+    <% }else{ %>
+    <h1>Welcome to the Enterprise Management System</h1>
+    <form action="/enterprise" method="post">
+        <labal for="name">Enterprise Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
 
-    <h1>Welcome to my Website</h1>
+        <label for="features" id="features" name="features" >Features:</label>
+            <% features.forEach(feature => { %>
+                <input type="checkbox"  name="<%= features %>" value="<%= feature %>"><%= feature %>
+            <% }) %>
+            <br>
+
+        <label for="roles" id="roles" name="roles" >Roles:</label>
+            <% roles.forEach(role => { %>
+                <input type="checkbox"  name="<%= roles %>" value="<%= role %>"><%= role %>
+            <% }) %>
+            <br>
+
+        <label for="departments" id="departments" name="departments">Departments:</label>
+            <% departments.forEach(department => { %>
+                <input type="checkbox"  name="<%= departments %>" value="<%= department %>"><%= department %>
+            <% }) %>
+            <br>
+
+        <label for="salariedDate" id="salariedDate" name="salariedDate">Salaried Date:</label>
+        <input type="date" id="salariedDate" name="salariedDate" required>
+        <br>
+        <button type="submit">Create Enterprise</button>
+    </form>
+    <% } %>
     
 </body>
 </html>
