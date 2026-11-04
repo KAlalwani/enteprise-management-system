@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Enterprise</title>
+</head>
+<body>
+    <h1>Update Enterprise</h1>
+    <form action="/enterprise/<%= enterprise._id %>?_method=PUT" method="post">
+        <label for="name">Enterprise Name:</label>
+        <input type="text" id="name" name="name" value="<%= enterprise.name %>" required>
+        <br>
+
+        <label for="features">Features:</label>
+        <% features.forEach(feature => { %>
+            <input type="checkbox" name="features" value="<%= feature %>" <%= enterprise.features.includes(feature) ? 'checked' : '' %>><%= feature %>
+        <% }) %>
+        <br>
+
+        <label for="roles">Roles:</label>
+        <% roles.forEach(role => { %>
+            <input type="checkbox" name="roles" value="<%= role %>" <%= enterprise.roles.includes(role) ? 'checked' : '' %>><%= role %>
+        <% }) %>
+        <br>
+
+        <label for="departments">Departments:</label>
+        <% departments.forEach(department => { %>
+            <input type="checkbox" name="departments" value="<%= department %>" <%= enterprise.departments.includes(department) ? 'checked' : '' %>><%= department %>
+        <% }) %>
+        <br>
+
+        <label for="salariedDate">Salaried Date:</label>
+        <input type="date" id="salariedDate" name="salariedDate" value="<%= enterprise.salariesDate.toISOString().split('T')[0] %>" required>
+        <br>
+
+        <button type="submit">Update Enterprise</button>
+    </form>
+</body>
+</html>

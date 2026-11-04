@@ -17,6 +17,7 @@
     <% } else { %>
         <p>No enterprise details available.</p>
     <% } %>
-    
+   <a href="/enterprise/<%= enterprise[0]._id %>/edit?_method=PUT">Update Enterprise</a>
+   <p><%= enterprise[0]._id %> hi</p>
 </body>
 </html>
