@@ -18,6 +18,9 @@
         <p>No enterprise details available.</p>
     <% } %>
    <a href="/enterprise/<%= enterprise[0]._id %>/edit?_method=PUT">Update Enterprise</a>
+<form action="/enterprise/<%= enterprise[0]._id %>?_method=DELETE" method="post">
+        <button>Delete Entry</button>
+    </form>
    <p><%= enterprise[0]._id %> hi</p>
 </body>
 </html>

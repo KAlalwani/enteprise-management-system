@@ -38,12 +38,12 @@ router.put('/:id', async (req,res)=>{
         departments: req.body.departments,
         salariesDate: new Date(req.body.salariedDate)
     }, {new: true}) 
-    res.redirect('/enterprise') // Redirect the user to homepage after entry is updated
+    res.redirect('/enterprise') 
 })
 
 // DELETE
 router.delete('/:id', async (req,res)=>{
-    const deletedEnterprise = await Enterprise.findByIdAndDelete(req.params.id)
+    await Enterprise.findByIdAndDelete(req.params.id)
     res.redirect('/')
 })
 module.exports = router;
