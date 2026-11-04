@@ -18,19 +18,19 @@
 
         <label for="features" id="features" name="features" >Features:</label>
             <% features.forEach(feature => { %>
-                <input type="checkbox"  name="<%= features %>" value="<%= feature %>"><%= feature %>
+                <input type="checkbox"  name="features" value="<%= feature %>"><%= feature %>
             <% }) %>
             <br>
 
         <label for="roles" id="roles" name="roles" >Roles:</label>
             <% roles.forEach(role => { %>
-                <input type="checkbox"  name="<%= roles %>" value="<%= role %>"><%= role %>
+                <input type="checkbox"  name="roles" value="<%= role %>"><%= role %>
             <% }) %>
             <br>
 
         <label for="departments" id="departments" name="departments">Departments:</label>
             <% departments.forEach(department => { %>
-                <input type="checkbox"  name="<%= departments %>" value="<%= department %>"><%= department %>
+                <input type="checkbox"  name="departments" value="<%= department %>"><%= department %>
             <% }) %>
             <br>
 

@@ -14,9 +14,9 @@ router.post('/', async (req,res)=>{
 // This creates a new entry in the database with the information from the request body
     const createdEnterprise = await Enterprise.create({ 
         name: req.body.name,
-        features: $push(req.body.features),
-        roles: $push(req.body.roles),
-        departments: $push(req.body.departments),
+        features: req.body.features,
+        roles: req.body.roles,
+        departments: req.body.departments,
         salariesDate: new Date(req.body.salariedDate)
     })
 
