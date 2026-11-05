@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1>Welcome to the Supplier Management System</h1>
+    <form action="/suppliers" method="post">
+        <labal for="name">Supplier Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+        <br>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="number" id="phoneNumber" name="phoneNumber" required>
+        <br>
+
+        <label for="IBAN">IBAN:</label>
+        <input type="text" id="IBAN" name="IBAN" required>
+        <br>
+
+        <button type="submit">Create Supplier</button>
+    </form>
+    
+</body>
+</html>

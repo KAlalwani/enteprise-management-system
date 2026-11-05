@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Supplier details</h1>
+        <p>Supplier Name: <%= supplier.name %></p>
+        <p>Email: <%= supplier.email%></p>
+        <p>Phone Number: <%= supplier.phoneNumber%></p>
+        <p>IBAN: <%= supplier.IBAN %></p>
+
+   <a href="/suppliers/<%= supplier._id %>/edit?_method=PUT">Update Supplier</a>
+<form action="/suppliers/<%= supplier._id %>?_method=DELETE" method="post">
+        <button>Delete Entry</button>
+    </form>
+    </body>
+</html>

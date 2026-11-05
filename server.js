@@ -19,6 +19,7 @@ const enterpriseController = require("./routes/enterprise.routes.js");
 const employeeController = require("./routes/employee.routes.js");
 const productController = require("./routes/product.routes.js");
 const serviceController = require("./routes/service.routes.js");
+const supplierController = require("./routes/supplier.routes.js");
 
 
 // Middleware
@@ -61,6 +62,7 @@ app.use('/enterprise', enterpriseController)
 app.use('/employee', employeeController)
 app.use('/products', productController)
 app.use('/services', serviceController)
+app.use('/suppliers', supplierController)
 
 
 

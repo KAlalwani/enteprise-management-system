@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Suppliers List</h1>
+    <% if(suppliers.length > 0) { %>
+        <% suppliers.forEach(supplier => { %>
+        <p>Supplier Name: <%= supplier.name %></p>
+        <a href="/suppliers/<%= supplier._id %>">view details</a>
+        <br>
+        <% }); %>
+    <% } else { %>
+        <p>No supplier details available.</p>
+    <% } %>
+      <a href="/suppliers/new">Add New Supplier</a>
+    </body>
+</html>
