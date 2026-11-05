@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const {categorys} = require('./globalValues')
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
   supplier: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Supplier',
-    required: true,
+    // required: true,
   },
   stock: {
     type: Number,
@@ -24,7 +24,7 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Category1', 'Category2', 'Category3'], // Replace with actual category names
+    enum: categorys, // Replace with actual category names
   },
 }, {timestamps: true});
 

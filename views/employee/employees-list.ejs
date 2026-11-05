@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Employee details</h1>
+    <% if(employees.length > 0) { %>
+        <% employees.forEach(employee => { %>
+        <p>Employee Name: <%= employee.name %></p>
+        <p>Roles: <%= employee.role%></p>
+           <a href="/employee/<%= employee._id %>">view Employee</a>
+
+       <% }); %>
+    <% } else { %>
+        <p>No employee details available.</p>
+    <% } %>
+
+    </form>
+    </body>
+</html>

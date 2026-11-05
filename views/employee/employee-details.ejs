@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Employee details</h1>
+        <p>Employee Name: <%= employee.name %></p>
+        <p>Roles: <%= employee.role%></p>
+        <p>Departments: <%= employee.department%></p>
+        <p>Salaried Date: <%= employee.salary %></p>
+
+   <a href="/employee/<%= employee._id %>/edit?_method=PUT">Update Employee</a>
+<form action="/employee/<%= employee._id %>?_method=DELETE" method="post">
+        <button>Delete Entry</button>
+    </form>
+    </body>
+</html>

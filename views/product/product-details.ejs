@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Product details</h1>
+        <p>Product Name: <%= product.name %></p>
+        <!-- <p>supplier: <%= product.supplier%></p> -->
+        <p>stock: <%= product.stock%></p>
+        <p>price: <%= product.price %></p>
+        <p>category: <%= product.category %></p>
+
+   <a href="/products/<%= product._id %>/edit?_method=PUT">Update Product</a>
+<form action="/products/<%= product._id %>?_method=DELETE" method="post">
+        <button>Delete Entry</button>
+    </form>
+    </body>
+</html>
