@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1>Welcome to the Service Management System</h1>
+    <form action="/services" method="post">
+        <labal for="name">Service Name:</label>
+        <input type="text" id="name" name="name" required>
+
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+        <br>
+            <select name="category" id="category">
+        <% if (categoryS) { %>
+          <% categoryS.forEach(category => { %>
+            <option value="<%= category %>"><%= category %></option>
+          <% }) %>
+        <% } else { %>
+          <option value="">No categorys available</option>
+        <% } %>
+      </select><br>
+
+        <button type="submit">Create Service</button>
+    </form>
+    
+</body>
+</html>

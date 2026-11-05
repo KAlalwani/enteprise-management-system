@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {categoryS} = require('./globalValues')
 
 const serviceSchema = new mongoose.Schema({
   name: {
@@ -9,7 +10,7 @@ const serviceSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['Category1', 'Category2', 'Category3'], // Replace with actual category names
+    enum: categoryS, // Replace with actual category names
   },
   price: {
     type: Number,

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1>Update</h1>
+    <form action="/services/<%= service._id %>?_method=PUT" method="post">
+        <labal for="name">Service Name:</label>
+        <input type="text" id="name" name="name" value="<%= service.name %>" required>
+        <br>
+
+
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="<%= service.price %>" required>
+        <br>
+            <select name="category" id="category">
+    <% if (categorys && categorys.length > 0) { %>
+        <% categorys.forEach(category => { %>
+            <option
+                value="<%= category %>"
+                <%= service && service.category === category ? 'selected' : '' %>
+            >
+                <%= category %>
+            </option>
+        <% }) %>
+    <% } else { %>
+        <option value="">No categories available</option>
+    <% } %>
+</select><br>
+
+        <button type="submit">Update Service</button>
+    </form>
+    
+</body>
+</html>

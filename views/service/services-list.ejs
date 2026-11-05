@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Services List</h1>
+    <% if(services.length > 0) { %>
+        <% services.forEach(service => { %>
+        <p>Service Name: <%= service.name %></p>
+        <a href="/services/<%= service._id %>">view details</a>
+        <br>
+        <% }); %>
+    <% } else { %>
+        <p>No service details available.</p>
+    <% } %>
+      <a href="/services/new">Add New Service</a>
+    </body>
+</html>
