@@ -1,18 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User.js");
+const Employee = require("../models/Employee.js");
 const bcrypt = require("bcrypt");
-
+const Enterprise = require("../models/Enterprise.js");
 
 // Sign up routes
-router.get("/sign-up", (req, res) => {
-  res.render("auth/sign-up.ejs");
+router.get("/sign-up", async (req, res) => {
+  const foundEnterprise = await Enterprise.findOne();
+  res.render("auth/sign-up.ejs", { enterprise: foundEnterprise });
 });
 
 router.post("/sign-up", async (req, res) => {
-  const userInDatabase = await User.findOne({ username: req.body.username });
-  if (userInDatabase) {
-    return res.send("Username already taken.");
+  const employeeInDatabase = await Employee.findOne({ username: req.body.username });
+  if (employeeInDatabase) {
+    return res.send("Employeename already taken.");
   }
 
   if (req.body.password !== req.body.confirmPassword) {
@@ -24,7 +25,7 @@ router.post("/sign-up", async (req, res) => {
 
   // validation logic
 
-  const user = await User.create(req.body);
+  const employee = await Employee.create(req.body);
   res.redirect("/auth/sign-in");
 });
 
@@ -38,27 +39,27 @@ router.get("/sign-in", (req, res) => {
 
 
 router.post("/sign-in", async (req, res) => {
-  // First, get the user from the database
-  const userInDatabase = await User.findOne({ username: req.body.username });
-  if (!userInDatabase) {
+  // First, get the employee from the database
+  const employeeInDatabase = await Employee.findOne({ username: req.body.username });
+  if (!employeeInDatabase) {
     return res.send("Login failed. Please try again.");
   }
 
-  // There is a user! Time to test their password with bcrypt
+  // There is a employee! Time to test their password with bcrypt
   const validPassword = bcrypt.compareSync(
     req.body.password,
-    userInDatabase.password
+    employeeInDatabase.password
   );
   if (!validPassword) {
     return res.send("Login failed. Please try again.");
   }
 
-  // There is a user AND they had the correct password. Time to make a session!
+  // There is a employee AND they had the correct password. Time to make a session!
   // Avoid storing the password, even in hashed format, in the session
-  // If there is other data you want to save to `req.session.user`, do so here!
-  req.session.user = {
-    username: userInDatabase.username,
-    _id: userInDatabase._id
+  // If there is other data you want to save to `req.session.employee`, do so here!
+  req.session.employee = {
+    username: employeeInDatabase.username,
+    _id: employeeInDatabase._id
   };
 
   res.redirect("/");

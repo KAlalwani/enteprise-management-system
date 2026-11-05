@@ -2,7 +2,17 @@ const mongoose = require("mongoose");
 const { roles, departments } = require("./globalValues");
 
 const employeeSchema = new mongoose.Schema({
-  name: {
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+    name: {
     type: String,
     required: true,
     unique: true,

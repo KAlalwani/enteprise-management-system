@@ -12,7 +12,7 @@ router.get('/', async (req,res)=>{
 // CREATE
 router.post('/', async (req,res)=>{
     console.log(req.body)
-    console.log(req.session.user)
+    console.log(req.session.employee)
 // This creates a new entry in the database with the information from the request body
     const createdEnterprise = await Enterprise.create({ 
         name: req.body.name,
@@ -22,7 +22,7 @@ router.post('/', async (req,res)=>{
         salariesDate: new Date(req.body.salariedDate)
     })
 
-    res.redirect('/') // Redirect the user to homepage after entry is created
+    res.redirect('/') // Redirect the employee to homepage after entry is created
 })
 
 // UPDATE
