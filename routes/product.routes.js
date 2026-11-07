@@ -2,10 +2,12 @@ const router = require("express").Router()
 const Product = require("../models/Product.js");
 const Enterprise = require("../models/Enterprise.js");
 const {categorys} = require('../models/globalValues')
+const Supplier = require('../models/Supplier.js')
 
 // READ
 router.get('/new', async (req,res)=>{
-    res.render('product/new-product.ejs', {categorys});
+    const suppliers = await Supplier.find()
+    res.render('product/new-product.ejs', {categorys, suppliers});
 })
 
 router.get('/', async (req,res)=>{
@@ -13,7 +15,7 @@ router.get('/', async (req,res)=>{
     res.render('product/products-list.ejs', {products: products});
 })
 router.get('/:id', async (req,res)=>{
-    const Foundroduct = await Product.findById(req.params.id)
+    const Foundroduct = await Product.findById(req.params.id).populate('supplier')
     res.render('product/product-details.ejs', {product: Foundroduct});
 })
 
@@ -24,7 +26,7 @@ router.post('/', async (req,res)=>{
 // This creates a new entry in the database with the information from the request body
     const createdProduct = await Product.create({ 
         name: req.body.name,
-        // supplier: req.body.supplier,
+        supplier: req.body.supplier,
         stock: req.body.stock,
         price: req.body.price,
         category: req.body.category
@@ -35,15 +37,14 @@ router.post('/', async (req,res)=>{
 
 // UPDATE
 router.get('/:id/edit', async (req,res)=>{
-    const enterprise = await Enterprise.findOne()
-    console.log(enterprise)
-    const product = await Product.findById(req.params.id)
-    res.render('product/update-product.ejs', {product: product, enterprise:enterprise});
+    const suppliers = await Supplier.find()
+    const product = await Product.findById(req.params.id).populate('supplier')
+    res.render('product/update-product.ejs', {product: product, suppliers});
 })
 router.put('/:id', async (req,res)=>{
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
         name: req.body.name,
-        // supplier: ,
+        supplier: req.body.supplier,
         stock: req.body.stock,
         price: req.body.price,
         category: req.body.category
