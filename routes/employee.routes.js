@@ -3,23 +3,28 @@ const Employee = require("../models/Employee");
 const Enterprise = require("../models/Enterprise.js");
 
 // READ
+router.get('/new', async (req,res)=>{
+    const enterprise = await Enterprise.findOne()
+    console.log(enterprise)
+    res.render('employee/new-employee.ejs', {enterprise});
+})
 router.get('/', async (req,res)=>{
     const employees = await Employee.find()
     console.log(employees)
     res.render('employee/employees-list.ejs', {employees: employees});
 })
 
+
 // CREATE
 router.post('/', async (req,res)=>{
     console.log(req.body)
     console.log(req.session.employee)
 // This creates a new entry in the database with the information from the request body
-    const createdEmployee = await Employee.create({ 
-        name: req.body.name,
-        features: req.body.features,
-        roles: req.body.roles,
-        departments: req.body.departments,
-        salariesDate: new Date(req.body.salariedDate)
+    const {name, role, department, salary, CPR, email, IBAN, phoneNumber, experience} = req.body;
+   
+const createdEmployee = await Employee.create({ 
+       name, role, department, salary, CPR, email, IBAN, phoneNumber, experience,
+       id: Math.round(Math.random() * 10000000)
     })
 
     res.redirect('/') // Redirect the employee to homepage after entry is created

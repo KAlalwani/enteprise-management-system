@@ -10,7 +10,7 @@ const connectToDB = require('./db.js')
 
 // middleware imports
 const isSignedIn = require("./middleware/is-signed-in.js");
-const passEmployeeToView = require("./middleware/pass-employee-to-view.js");
+const passEmployeeToView = require("./middleware/pass-user-to-view.js");
 
 // routes Imports
 const authController = require("./routes/auth.routes.js");

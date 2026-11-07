@@ -1,6 +1,6 @@
-const isSignedIn = (req, res, next) => {
-  if (req.session.employee) return next();
-  res.redirect("/auth/sign-in");
+const passUserToView = (req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
 };
 
-module.exports = isSignedIn;
+module.exports = passUserToView;

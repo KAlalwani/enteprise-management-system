@@ -2,21 +2,18 @@ const mongoose = require("mongoose");
 const { roles, departments } = require("./globalValues");
 
 const employeeSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
-  },
-  password: {
-    type: String,
-    required: true,
+  User: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
     name: {
     type: String,
     required: true,
     unique: true,
     trim: true
+  },
+  id:{
+    type: Number
   },
   role: {
     type: String,

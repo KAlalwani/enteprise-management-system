@@ -15,40 +15,8 @@
       <input type="password" name="password" id="password" />
       <label for="confirmPassword">Confirm Password:</label>
       <input type="password" name="confirmPassword" id="confirmPassword" /><br>
-      <label for="role">Role:</label>
-      <select name="role" id="role">
-        <% if (enterprise) { %>
-          <% enterprise.roles.forEach(role => { %>
-            <option value="<%= role %>"><%= role %></option>
-          <% }) %>
-        <% } else { %>
-          <option value="">No roles available</option>
-        <% } %>
-      </select>
-      <label for="department">Department:</label>
-      <select name="department" id="department">
-        <% if (enterprise) { %>
-          <% enterprise.departments.forEach(department => { %>
-            <option value="<%= department %>"><%= department %></option>
-          <% }) %>
-        <% } else { %>
-          <option value="">No departments available</option>
-        <% } %>
-      </select><br>
-      <label for="name" >Employee Name:</label>
-      <input type="text" name="name" id="name" /><br>
-      <label for="salary" >Salary:</label>
-      <input type="number" name="salary" id="salary" /><br>
-      <label for="CPR" >CPR:</label>
-      <input type="number" name="CPR" id="CPR" /><br>
-      <label for="email" >Email:</label>
-      <input type="text" name="email" id="email" /><br>
-      <label for="IBAN" >IBAN:</label>
-      <input type="text" name="IBAN" id="IBAN" /><br>
-      <label for="phoneNumber" >Phone:</label>
-      <input type="number" name="phoneNumber" id="phoneNumber" /><br>
-      <label for="experience" >Experience:</label>
-      <input type="number" name="experience" id="experience" /><br>
+      <label for="employeeId" >Employee ID:</label>
+      <input type="number" name="employeeId" id="employeeId" /><br>
       <button type="submit">Sign up</button>
     </form>
   </body>
