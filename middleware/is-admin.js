@@ -2,12 +2,9 @@ const Employee = require('../models/Employee')
 
 const isAdmin = async (req, res, next) => {
 const foundEmployee = await Employee.findOne({
-    user: req.session.user
+    user: req.session.user._id
 })
-    res.locals.isAdmin = foundEmployee?.role === 'admin';
-    console.log(foundEmployee);
-console.log(foundEmployee?.role);
-console.log(res.locals.isAdmin);
+    res.locals.isAdmin = foundEmployee?.role === 'Admin';
 next();
 };
 
