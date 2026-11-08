@@ -31,7 +31,7 @@ const createdEmployee = await Employee.create({
     res.redirect('/') // Redirect the employee to homepage after entry is created
 })
 
-router.get('/:id', async (req,res)=>{
+router.get('/:id', isAdmin, async (req,res)=>{
     const foundEmployee = await Employee.findById(req.params.id) // Gets the one entry by its id
     res.render('employee/employee-details.ejs',{employee: foundEmployee})
 })

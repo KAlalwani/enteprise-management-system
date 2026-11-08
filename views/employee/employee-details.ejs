@@ -12,10 +12,11 @@
         <p>Roles: <%= employee.role%></p>
         <p>Departments: <%= employee.department%></p>
         <p>Salaried Date: <%= employee.salary %></p>
-
+<% if (isAdmin) { %>
    <a href="/employee/<%= employee._id %>/edit?_method=PUT">Update Employee</a>
 <form action="/employee/<%= employee._id %>?_method=DELETE" method="post">
         <button>Delete Entry</button>
     </form>
+    <% } %>
     </body>
 </html>

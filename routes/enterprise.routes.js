@@ -1,9 +1,10 @@
 const router = require("express").Router()
+const isAdmin = require("../middleware/is-admin");
 const Enterprise = require("../models/Enterprise");
 const { roles, departments, features } = require("../models/globalValues");
 
 // READ
-router.get('/', async (req,res)=>{
+router.get('/', isAdmin, async (req,res)=>{
     const enterprise = await Enterprise.find()
     console.log(enterprise)
     res.render('enterprise/enterprise-details.ejs', {enterprise: enterprise});
