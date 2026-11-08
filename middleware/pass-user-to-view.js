@@ -1,6 +1,6 @@
-const passEmployeeToView = (req, res, next) => {
-  res.locals.employee = req.session.employee;
+const passUserToView = (req, res, next) => {
+  res.locals.user = req.session.user;
   next();
 };
 
-module.exports = passEmployeeToView;
+module.exports = passUserToView;

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.js");
 const bcrypt = require("bcrypt");
-
+const isEmployee = require('../middleware/is-employee.js')
 
 // Sign up routes
 router.get("/sign-up", (req, res) => {
@@ -19,6 +19,9 @@ router.post("/sign-up", async (req, res) => {
     return res.send("Password and Confirm Password must match");
   }
 
+  if(!isEmployee){
+    return res.send('User is not a vaild employee')
+  }  
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   req.body.password = hashedPassword;
 

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { roles, departments } = require("./globalValues");
 
 const employeeSchema = new mongoose.Schema({
-  User: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },

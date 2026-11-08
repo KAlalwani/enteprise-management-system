@@ -1,6 +1,8 @@
 const router = require("express").Router()
 const Employee = require("../models/Employee");
 const Enterprise = require("../models/Enterprise.js");
+const isAdmin = require('../middleware/is-admin.js')
+
 
 // READ
 router.get('/new', async (req,res)=>{
@@ -8,9 +10,8 @@ router.get('/new', async (req,res)=>{
     console.log(enterprise)
     res.render('employee/new-employee.ejs', {enterprise});
 })
-router.get('/', async (req,res)=>{
+router.get('/',isAdmin, async (req,res)=>{
     const employees = await Employee.find()
-    console.log(employees)
     res.render('employee/employees-list.ejs', {employees: employees});
 })
 
