@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Customer details</h1>
+        <p>Customer Name: <%= customer.name %></p>
+        <p>supplier: <%= customer.phone%></p>
+        <p>stock: <%= customer.email%></p>
+
+   <a href="/customers/<%= customer._id %>/edit?_method=PUT">Update Customer</a>
+<form action="/customers/<%= customer._id %>?_method=DELETE" method="post">
+        <button>Delete Entry</button>
+    </form>
+    </body>
+</html>

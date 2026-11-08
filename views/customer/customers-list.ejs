@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Customers List</h1>
+    <% if(customers.length > 0) { %>
+        <% customers.forEach(customer => { %>
+        <p>Customer Name: <%= customer.name %></p>
+        <a href="/customers/<%= customer._id %>">view details</a>
+        <br>
+        <% }); %>
+    <% } else { %>
+        <p>No customer details available.</p>
+    <% } %>
+      <a href="/customers/new">Add New Customer</a>
+    </body>
+</html>
