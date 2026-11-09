@@ -1,57 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invoice Details</title>
 </head>
-
 <body>
   <%- include('../partials/navbar') %>
   <h1>Invoice Details</h1>
 
   <p>Invoice Number: <%= invoice.invoiceNumber %></p>
-
+  <p>Status: <%= invoice.status %></p>
   <p>Transaction Type: <%= invoice.transactionType %></p>
-
   <p>Date: <%= invoice.transactionDate.toLocaleDateString() %></p>
 
-  <% if (invoice.customer) { %>
-    <p>Customer: <%= invoice.customer.name %></p>
-  <% } %>
-
-  <% if (invoice.supplier) { %>
-    <p>Supplier: <%= invoice.supplier.name %></p>
-  <% } %>
+  <% if (invoice.customer) { %><p>Customer: <%= invoice.customer.name %></p><% } %>
+  <% if (invoice.supplier) { %><p>Supplier: <%= invoice.supplier.name %></p><% } %>
 
   <h2>Items</h2>
-
   <% invoice.items.forEach(item => { %>
     <hr>
-
     <p>Item: <%= item.name %></p>
-
     <p>Quantity: <%= item.quantity %></p>
-
     <p>Unit Price: <%= item.unitPrice %> BHD</p>
-
     <p>Subtotal: <%= item.subtotal %> BHD</p>
-
   <% }) %>
-
   <hr>
 
+  <% const remaining = invoice.totalAmount - invoice.amountPaid %>
   <h3>Total: <%= invoice.totalAmount %> BHD</h3>
-
   <p>Amount Paid: <%= invoice.amountPaid %> BHD</p>
-
+  <p>Remaining: <%= remaining.toFixed(3) %> BHD</p>
   <p>Payment Status: <%= invoice.paymentStatus %></p>
-
   <p>Description: <%= invoice.description || 'N/A' %></p>
 
-  <a href="/invoices">Back to Invoices</a>
+  <% if (invoice.status === 'Active') { %>
+    <% if (remaining > 0.0005) { %>
+      <form action="/invoices/<%= invoice._id %>/payments" method="post">
+        <label for="amount">Record payment (BHD):</label>
+        <input type="number" step="0.001" min="0.001" id="amount" name="amount" required>
+        <button type="submit">Add Payment</button>
+      </form>
+    <% } %>
+    <a href="/invoices/<%= invoice._id %>/edit">Edit Description</a>
+    <% if (isAdmin) { %>
+      <form action="/invoices/<%= invoice._id %>?_method=DELETE" method="post">
+        <button>Cancel Invoice</button>
+      </form>
+    <% } %>
+  <% } %>
 
+  <br>
+  <a href="/invoices">Back to Invoices</a>
 </body>
 </html>

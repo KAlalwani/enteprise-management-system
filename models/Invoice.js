@@ -86,6 +86,12 @@ const invoiceSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  
+  status: {
+    type: String,
+    enum: ['Active', 'Cancelled'],
+    default: 'Active'
+  },
 
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
