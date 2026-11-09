@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+        <h1>Invoice details</h1>
+        <p>Invoice customer: <%= invoice.customer.name %>
+        </p>
+        <p>salse person: <%= invoice.salesperson.name%>
+        </p>
+        <% for (let index = 0; index < ivoice.products.length; index++) {
+            <p>products: <%= invoice.product[index]%></p>
+            <p>, <%= invoice.productQuantity[index]%></p>
+            <p>, <%= invoice.product[index].price%></p>
+        <% }% >
+            
+             <% invoice.services.forEach(service=> {% >
+            <p>prices: <%= invoice.service%></p>
+            <p>, <%= invoice.service.price%></p>
+            <% }); %>
+            <p>category: <%= invoice.totalPrice %>
+            </p>
+
+            <a href="/invoices/<%= invoice._id %>/edit?_method=PUT">Update Invoice</a>
+            <form action="/invoices/<%= invoice._id %>?_method=DELETE" method="post">
+                <button>Delete Entry</button>
+            </form>
+</body>
+
+</html>

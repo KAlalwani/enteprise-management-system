@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1>Update</h1>
+    <form action="/invoices/<%= invoice._id %>?_method=PUT" method="post">
+              <label for="customer">Customer:</label>
+      <input type="number" id="customer" name="customer" value="<% invoice.customer.name %>" required>
+      <br>
+      <label for="products">Products:</label>
+      <input type="text" id="products" name="products" multiple value="<% invoice.products %>" required>
+      <br>
+      <label for="productsQ">Products Quantity:</label>
+      <input type="text" id="productsQ" name="productsQ" multiple value="<% invoice.productsQ %>" required>
+      <br>
+      <label for="services">Services:</label>
+      <input type="text" id="services" name="services" multiple value="<% invoice.services %>" required>
+      <br>
+      <p><%= invoice.totalPrice %></p>
+      <label for="supplier">Supplier:</label>
+        <button type="submit">Update Invoice</button>
+    </form>
+    
+</body>
+</html>

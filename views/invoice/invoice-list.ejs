@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+</head>
+<body>
+        <%- include('../partials/navbar') %>
+    <h1>Invoices List</h1>
+    <% if(invoices.length > 0) { %>
+        <% invoices.forEach(invoice => { %>
+        <p>Invoice: <%= invoice.id %></p>
+        <a href="/invoices/<%= invoice._id %>">view details</a>
+        <br>
+        <% }); %>
+    <% } else { %>
+        <p>No invoice details available.</p>
+    <% } %>
+      <a href="/invoices/new">Add New Invoice</a>
+    </body>
+</html>
