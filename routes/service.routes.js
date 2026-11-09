@@ -15,6 +15,7 @@ router.get('/', async (req,res)=>{
 })
 router.get('/:id', async (req,res)=>{
     const Foundroduct = await Service.findById(req.params.id)
+    if (!Foundroduct) return next()
     res.render('service/service-details.ejs', {service: Foundroduct});
 })
 
@@ -37,6 +38,7 @@ router.get('/:id/edit', async (req,res)=>{
     const enterprise = await Enterprise.findOne()
     console.log(enterprise)
     const service = await Service.findById(req.params.id)
+    if (!service) return next()
     res.render('service/update-service.ejs', {service: service, enterprise:enterprise});
 })
 router.put('/:id', async (req,res)=>{
@@ -44,7 +46,7 @@ router.put('/:id', async (req,res)=>{
         name: req.body.name,
         price: req.body.price,
         category: req.body.category
-    }, {new: true}) 
+    }, {new: true, runValidators: true}) 
     res.redirect('/services') 
 })
 

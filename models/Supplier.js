@@ -10,10 +10,15 @@ const supplierSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
+    trim: true, 
+    lowercase: true, 
+    match: [/^\S+@\S+\.\S+$/, 'Invalid email.']
   },
   phoneNumber: {
     type: Number,
     required: true,
+    match: [/^\+?\d{7,15}$/, 'Invalid phone number.']
   },
   IBAN: {
     type: String,

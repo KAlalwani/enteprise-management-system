@@ -17,6 +17,7 @@ router.get('/', async (req,res)=>{
 })
 router.get('/:id', async (req,res)=>{
     const Foundroduct = await Product.findById(req.params.id).populate('supplier')
+    if (!Foundroduct) return next()
     res.render('product/product-details.ejs', {product: Foundroduct});
 })
 
@@ -41,6 +42,7 @@ router.post('/', async (req,res)=>{
 router.get('/:id/edit', async (req,res)=>{
     const suppliers = await Supplier.find()
     const product = await Product.findById(req.params.id).populate('supplier')
+    if (!product) return next()
     res.render('product/update-product.ejs', {product: product, suppliers});
 })
 router.put('/:id', async (req,res)=>{
@@ -51,7 +53,7 @@ router.put('/:id', async (req,res)=>{
         price: req.body.price,
         unitPrice: req.body.unitPrice,
         category: req.body.category
-    }, {new: true}) 
+    }, {new: true, runValidators: true}) 
     res.redirect('/products') 
 })
 

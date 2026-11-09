@@ -7,6 +7,7 @@ const { roles, departments, features } = require("../models/globalValues");
 // READ
 router.get('/', isSignedIn ,isAdmin,  async (req,res)=>{
     const enterprise = await Enterprise.find()
+          if (!enterprise) return next()
     res.render('enterprise/enterprise-details.ejs', {enterprise: enterprise});
 })
 
@@ -28,6 +29,7 @@ router.post('/', async (req,res)=>{
 // UPDATE
 router.get('/:id/edit', isSignedIn, isAdmin, async (req,res)=>{
     const enterprise = await Enterprise.findById(req.params.id)
+      if (!enterprise) return next()
     res.render('enterprise/update-enterprise.ejs', {enterprise: enterprise, roles,departments, features});
 })
 router.put('/:id', isSignedIn, isAdmin, async (req,res)=>{
@@ -37,7 +39,7 @@ router.put('/:id', isSignedIn, isAdmin, async (req,res)=>{
         roles: req.body.roles,
         departments: req.body.departments,
         salariesDate: new Date(req.body.salariedDate)
-    }, {new: true}) 
+    }, {new: true, runValidators: true}) 
     res.redirect('/enterprise') 
 })
 

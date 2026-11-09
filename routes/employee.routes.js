@@ -38,12 +38,14 @@ router.post('/', bootstrapOrAdmin(Employee), async (req, res) => {
 
 router.get('/:id', isSignedIn, isAdmin, async (req, res) => {
   const foundEmployee = await Employee.findById(req.params.id)
+    if (!employee) return next()
   res.render('employee/employee-details.ejs', { employee: foundEmployee })
 })
 
 router.get('/:id/edit', isSignedIn, isAdmin, async (req, res) => {
   const enterprise = await Enterprise.findOne()
   const employee = await Employee.findById(req.params.id)
+  if (!employee) return next()
   res.render('employee/update-employee.ejs', { employee, enterprise });
 })
 
@@ -51,9 +53,9 @@ router.put('/:id', isSignedIn, isAdmin, async (req, res) => {
   await Employee.findByIdAndUpdate(req.params.id, {
     name: req.body.name,
     salary: req.body.salary,
-    role: req.body.roles,
-    department: req.body.departments,
-  }, { new: true })
+    role: req.body.role,
+    department: req.body.department,
+  }, { new: true, runValidators: true })
   res.redirect('/employee')
 })
 

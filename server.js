@@ -59,6 +59,32 @@ app.use("/suppliers", isSignedIn, supplierController);
 app.use("/customers", isSignedIn, customerController);
 app.use("/operations", isSignedIn, operationController);
 app.use("/invoices", isSignedIn, invoiceRoutes);
+
+// 404
+app.use((req, res) => {
+  res.status(404).render('error.ejs', { message: 'Page not found.' })
+})
+
+// Error handler
+app.use((err, req, res, next) => {
+  if (res.headersSent) return next(err)
+  let status = 500
+  let message = 'Something went wrong.'
+  if (err.name === 'ValidationError') {
+    status = 400
+    message = Object.values(err.errors).map(e => e.message).join(' ')
+  } else if (err.code === 11000) {
+    status = 409
+    message = `${Object.keys(err.keyValue)[0]} already exists.`
+  } else if (err.name === 'CastError') {
+    status = 404
+    message = 'Not found.'
+  } else {
+    console.error(err)
+  }
+  res.status(status).render('error.ejs', { message })
+})
+
 // connect to database and listen on Port 3000
 async function startServer() {
   const PORT = process.env.PORT || 3000;

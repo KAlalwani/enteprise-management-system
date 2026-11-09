@@ -13,7 +13,8 @@ router.get('/', async (req,res)=>{
     res.render('supplier/suppliers-list.ejs', {suppliers: suppliers});
 })
 router.get('/:id', async (req,res)=>{
-    const Foundroduct = await Supplier.findById(req.params.id)
+    const foundSupplier = await Supplier.findById(req.params.id)
+    if (!foundSupplier) return next()
     res.render('supplier/supplier-details.ejs', {supplier: Foundroduct});
 })
 
@@ -37,6 +38,7 @@ router.get('/:id/edit', async (req,res)=>{
     const enterprise = await Enterprise.findOne()
     console.log(enterprise)
     const supplier = await Supplier.findById(req.params.id)
+    if (!supplier) return next()
     res.render('supplier/update-supplier.ejs', {supplier: supplier, enterprise:enterprise});
 })
 router.put('/:id', async (req,res)=>{
@@ -45,7 +47,7 @@ router.put('/:id', async (req,res)=>{
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         IBAN: req.body.IBAN
-    }, {new: true}) 
+    }, {new: true, runValidators: true}) 
     res.redirect('/suppliers') 
 })
 

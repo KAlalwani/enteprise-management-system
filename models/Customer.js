@@ -10,11 +10,15 @@ const customerSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: true,
+    match: [/^\+?\d{7,15}$/, 'Invalid phone number.']
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    trim: true, 
+    lowercase: true, 
+    match: [/^\S+@\S+\.\S+$/, 'Invalid email.']
   },
 }, {timestamps: true});
 

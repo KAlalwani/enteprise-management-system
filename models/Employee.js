@@ -29,16 +29,19 @@ const employeeSchema = new mongoose.Schema({
   salary: {
     type: Number,
     required: true,
+    min: 0
   },
   CPR: {
     type: Number,
     required: true,
     unique: true,
+    match: [/^\d{9}$/, 'CPR must be 9 digits.']
   },
   phoneNumber: {
     type: Number,
     required: true,
     unique: true,
+    match: [/^\+?\d{7,15}$/, 'Invalid phone number.']
   },
   IBAN: {
     type: String,
@@ -49,10 +52,14 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    trim: true, 
+    lowercase: true, 
+    match: [/^\S+@\S+\.\S+$/, 'Invalid email.']
   },
   experience: {
     type: Number,
     required: true,
+    min: 0
   },
 }, {timestamps: true});
 

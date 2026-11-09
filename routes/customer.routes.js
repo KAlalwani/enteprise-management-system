@@ -16,6 +16,7 @@ router.get('/', async (req,res)=>{
 })
 router.get('/:id', async (req,res)=>{
     const Foundroduct = await Customer.findById(req.params.id)
+    if (!customer) return next()
     res.render('customer/customer-details.ejs', {customer: Foundroduct});
 })
 
@@ -36,6 +37,7 @@ router.post('/', async (req,res)=>{
 // UPDATE
 router.get('/:id/edit', async (req,res)=>{
     const customer = await Customer.findById(req.params.id)
+    if (!customer) return next()
     res.render('customer/update-customer.ejs', {customer: customer});
 })
 router.put('/:id', async (req,res)=>{
@@ -43,7 +45,7 @@ router.put('/:id', async (req,res)=>{
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
-    }, {new: true}) 
+    }, {new: true, runValidators: true}) 
     res.redirect('/customers') 
 })
 

@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Employee</title>
 </head>
+
 <body>
-    <h1>Update Employee</h1>
-    <form action="/employee/<%= employee._id %>?_method=PUT" method="post">
-        <label for="name">Employee Name:</label>
-        <input type="text" id="name" name="name" value="<%= employee.name %>" required>
-        <br>
+    <%- include('../partials/navbar') %>
+        <h1>Update Employee</h1>
+        <form action="/employee/<%= employee._id %>?_method=PUT" method="post">
+            <label for="name">Employee Name:</label>
+            <input type="text" id="name" name="name" value="<%= employee.name %>" required>
+            <br>
+            <label for="role">Role:</label>
+            <select name="role" id="role">
+                <% enterprise.roles.forEach(role=> { %>
+                    <option value="<%= role %>" <%=employee.role===role ? 'selected' : '' %>><%= role %>
+                    </option>
+                    <% }) %>
+            </select>
+            <br>
+            <label for="department">Department:</label>
+            <select name="department" id="department">
+                <% enterprise.departments.forEach(department=> { %>
+                    <option value="<%= department %>" <%=employee.department===department ? 'selected' : '' %>><%=
+                            department %>
+                    </option>
+                    <% }) %>
+            </select>
+            <br>
 
-        <label for="roles">Roles:</label>
-        <% enterprise.roles.forEach(role => { %>
-            <input type="checkbox" name="roles" value="<%= role %>" <%= employee.role.includes(role) ? 'checked' : '' %>><%= role %>
-        <% }) %>
-        <br>
+            <label for="salary">Salary:</label>
+            <input type="number" id="salary" name="salary" value="<%= employee.salary %>" required>
+            <br>
 
-        <label for="departments">Departments:</label>
-        <% enterprise.departments.forEach(department => { %>
-            <input type="checkbox" name="departments" value="<%= department %>" <%= employee.department.includes(department) ? 'checked' : '' %>><%= department %>
-        <% }) %>
-        <br>
-
-        <label for="salary">Salary:</label>
-        <input type="number" id="salary" name="salary" value="<%= employee.salary %>" required>
-        <br>
-
-        <button type="submit">Update Employee</button>
-    </form>
+            <button type="submit">Update Employee</button>
+        </form>
 </body>
+
 </html>
