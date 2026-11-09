@@ -1,36 +1,57 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Details</title>
 </head>
 
 <body>
-    <%- include('../partials/navbar') %>
-        <h1>Invoice details</h1>
-        <p>Invoice customer: <%= invoice.customer.name %>
-        </p>
-        <p>salse person: <%= invoice.salesperson.name%>
-        </p>
-        <% for (let index = 0; index < ivoice.products.length; index++) {
-            <p>products: <%= invoice.product[index]%></p>
-            <p>, <%= invoice.productQuantity[index]%></p>
-            <p>, <%= invoice.product[index].price%></p>
-        <% }% >
-            
-             <% invoice.services.forEach(service=> {% >
-            <p>prices: <%= invoice.service%></p>
-            <p>, <%= invoice.service.price%></p>
-            <% }); %>
-            <p>category: <%= invoice.totalPrice %>
-            </p>
+  <%- include('../partials/navbar') %>
+  <h1>Invoice Details</h1>
 
-            <a href="/invoices/<%= invoice._id %>/edit?_method=PUT">Update Invoice</a>
-            <form action="/invoices/<%= invoice._id %>?_method=DELETE" method="post">
-                <button>Delete Entry</button>
-            </form>
+  <p>Invoice Number: <%= invoice.invoiceNumber %></p>
+
+  <p>Transaction Type: <%= invoice.transactionType %></p>
+
+  <p>Date: <%= invoice.transactionDate.toLocaleDateString() %></p>
+
+  <% if (invoice.customer) { %>
+    <p>Customer: <%= invoice.customer.name %></p>
+  <% } %>
+
+  <% if (invoice.supplier) { %>
+    <p>Supplier: <%= invoice.supplier.name %></p>
+  <% } %>
+
+  <h2>Items</h2>
+
+  <% invoice.items.forEach(item => { %>
+    <hr>
+
+    <p>Item: <%= item.name %></p>
+
+    <p>Quantity: <%= item.quantity %></p>
+
+    <p>Unit Price: <%= item.unitPrice %> BHD</p>
+
+    <p>Subtotal: <%= item.subtotal %> BHD</p>
+
+  <% }) %>
+
+  <hr>
+
+  <h3>Total: <%= invoice.totalAmount %> BHD</h3>
+
+  <p>Amount Paid: <%= invoice.amountPaid %> BHD</p>
+
+  <p>Payment Status: <%= invoice.paymentStatus %></p>
+
+  <p>Description: <%= invoice.description || 'N/A' %></p>
+
+  <a href="/invoices">Back to Invoices</a>
+
 </body>
-
 </html>

@@ -22,6 +22,7 @@ const serviceController = require("./routes/service.routes.js");
 const supplierController = require("./routes/supplier.routes.js");
 const customerController = require("./routes/customer.routes.js");
 const operationController = require("./routes/operation.routes.js");
+const invoiceRoutes = require('./routes/invoice.routes.js');
 
 
 // Middleware
@@ -67,8 +68,7 @@ app.use('/services', serviceController)
 app.use('/suppliers', supplierController)
 app.use('/customers', customerController)
 app.use('/operations', operationController)
-
-
+app.use('/invoices', invoiceRoutes);
 
 // connect to database and listen on Port 3000
 async function startServer() {

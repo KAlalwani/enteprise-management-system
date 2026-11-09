@@ -1,22 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoices</title>
 </head>
+
 <body>
-        <%- include('../partials/navbar') %>
-    <h1>Invoices List</h1>
-    <% if(invoices.length > 0) { %>
-        <% invoices.forEach(invoice => { %>
-        <p>Invoice: <%= invoice.id %></p>
-        <a href="/invoices/<%= invoice._id %>">view details</a>
-        <br>
-        <% }); %>
-    <% } else { %>
-        <p>No invoice details available.</p>
-    <% } %>
-      <a href="/invoices/new">Add New Invoice</a>
-    </body>
+  <%- include('../partials/navbar') %>
+
+  <h1>Invoices</h1>
+
+  <a href="/invoices/new">Create New Invoice</a>
+
+  <% invoices.forEach(invoice => { %>
+    <hr>
+
+    <p>Invoice Number: <%= invoice.invoiceNumber %></p>
+
+    <p>Type: <%= invoice.transactionType %></p>
+
+    <p>
+      Customer:
+      <%= invoice.customer ? invoice.customer.name : 'N/A' %>
+    </p>
+
+    <p>
+      Supplier:
+      <%= invoice.supplier ? invoice.supplier.name : 'N/A' %>
+    </p>
+
+    <p>Total: <%= invoice.totalAmount %> BHD</p>
+
+    <p>Payment Status: <%= invoice.paymentStatus %></p>
+
+    <a href="/invoices/<%= invoice._id %>">View Invoice</a>
+
+  <% }) %>
+
+</body>
 </html>

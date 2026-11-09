@@ -1,36 +1,84 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Create Invoice</title>
 </head>
 
 <body>
   <%- include('../partials/navbar') %>
-    <h1>Welcome to the Invoice Management System</h1>
-    <form action="/invoices" method="post">
 
-      <label for="customer">Customer:</label>
-      <input type="number" id="customer" name="customer" required>
-      <br>
-      <label for="products">Products:</label>
-      <input type="text" id="products" name="products" multiple required>
-      <br>
-      <label for="productsQ">Products Quantity:</label>
-      <input type="text" id="productsQ" name="productsQ" multiple required>
-      <br>
-      <label for="services">Services:</label>
-      <input type="text" id="services" name="services" multiple required>
-      <br>
-      <p><%= invoice.totalPrice %></p>
-      <label for="supplier">Supplier:</label>
+  <h1>Create Invoice</h1>
 
+  <form action="/invoices" method="POST">
 
-      <button type="submit">Create Invoice</button>
-    </form>
+    <label for="transactionType">Transaction Type:</label>
+    <select id="transactionType" name="transactionType" required>
+      <option value="Sale">Sale</option>
+      <option value="Purchase">Purchase</option>
+    </select>
+    <br>
+
+    <label for="customer">Customer ID:</label>
+    <select id="customer" name="customer">
+      <option value="">Select Customer</option>
+      <% customers.forEach(customer => { %>
+        <option value="<%= customer._id %>">
+          <%= customer.name %>
+        </option>
+      <% }) %>
+    </select>
+    <br>
+
+    <label for="supplier">Supplier ID:</label>
+    <select id="supplier" name="supplier">
+      <option value="">Select Supplier</option>
+      <% suppliers.forEach(supplier => { %>
+        <option value="<%= supplier._id %>">
+          <%= supplier.name %>
+        </option>
+      <% }) %>
+    </select>
+    <br>
+
+    <h3>Products</h3>
+
+<% products.forEach(product => { %>
+  <input type="checkbox" name="products" value="<%= product._id %>">
+  <%= product.name %>
+
+  <input
+    type="number"
+    name="quantities[<%= product._id %>]"
+    min="0"
+    value="0"
+  >
+  <br>
+<% }) %>
+    <h3>Services</h3>
+
+    <% services.forEach(service => { %>
+      <label>
+        <input
+          type="checkbox"
+          name="services"
+          value="<%= service._id %>"
+        >
+        <%= service.name %>
+      </label>
+      <br>
+    <% }) %>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description"></textarea>
+    <br>
+
+    <button type="submit">Create Invoice</button>
+
+  </form>
 
 </body>
-
 </html>

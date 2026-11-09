@@ -29,6 +29,7 @@ router.post('/', async (req,res)=>{
         supplier: req.body.supplier,
         stock: req.body.stock,
         price: req.body.price,
+        unitPrice: req.body.unitPrice,
         category: req.body.category
     })
 
@@ -47,6 +48,7 @@ router.put('/:id', async (req,res)=>{
         supplier: req.body.supplier,
         stock: req.body.stock,
         price: req.body.price,
+        unitPrice: req.body.unitPrice,
         category: req.body.category
     }, {new: true}) 
     res.redirect('/products') 

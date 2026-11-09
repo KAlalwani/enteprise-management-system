@@ -31,6 +31,9 @@
         <label for="price">Price:</label>
         <input type="number" id="price" name="price" value="<%= product.price %>" required>
         <br>
+        <label for="unitPrice">Cost Price:</label>
+<input type="number" step="0.001" id="unitPrice" name="unitPrice" value="<%= product.unitPrice %>" required>
+<br>
             <select name="category" id="category">
     <% if (categorys && categorys.length > 0) { %>
         <% categorys.forEach(category => { %>
