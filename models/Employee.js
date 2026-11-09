@@ -13,7 +13,9 @@ const employeeSchema = new mongoose.Schema({
     trim: true
   },
   id:{
-    type: Number
+    type: Number,
+    unique: true, 
+    sparse: true
   },
   role: {
     type: String,

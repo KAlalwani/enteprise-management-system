@@ -1,11 +1,5 @@
-const Employee = require('../models/Employee')
-
-const isAdmin = async (req, res, next) => {
-const foundEmployee = await Employee.findOne({
-    user: req.session.user._id
-})
-    res.locals.isAdmin = foundEmployee?.role === 'Admin';
-next();
+const isAdmin = (req, res, next) => {
+  if (req.session.user?.role === 'Admin') return next();
+  res.status(403).send('Admins only.');
 };
-
 module.exports = isAdmin;

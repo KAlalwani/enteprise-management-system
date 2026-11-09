@@ -3,6 +3,7 @@ const Customer = require("../models/Customer.js");
 const Enterprise = require("../models/Enterprise.js");
 const {categorys} = require('../models/globalValues.js')
 const Supplier = require('../models/Supplier.js')
+const isAdmin = require('../middleware/is-admin.js')
 
 // READ
 router.get('/new', async (req,res)=>{
@@ -47,7 +48,7 @@ router.put('/:id', async (req,res)=>{
 })
 
 // DELETE
-router.delete('/:id', async (req,res)=>{
+router.delete('/:id',isAdmin, async (req,res)=>{
     await Customer.findByIdAndDelete(req.params.id)
     res.redirect('/')
 })

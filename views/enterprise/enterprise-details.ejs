@@ -17,7 +17,7 @@
     <% } else { %>
         <p>No enterprise details available.</p>
     <% } %>
-   <% if (isAdmin) { %>
+   <% if (isAdmin && enterprise.length) { %>
     <a href="/enterprise/<%= enterprise[0]._id %>/edit?_method=PUT">Update Enterprise</a>
 <form action="/enterprise/<%= enterprise[0]._id %>?_method=DELETE" method="post">
         <button>Delete Entry</button>

@@ -1,10 +1,8 @@
 <nav>
     
     <a href="/">Homepage</a>
-    <a href="/enterprise">Enterprise Details</a>
     <% if (user){ %>
     <a href="/auth/sign-out">Logout</a>
-    <a href="/employee/">Employees</a>
     <a href="/products/"> products</a>
     <a href="/services/"> services</a> 
      <a href="/suppliers/"> suppliers</a> 
@@ -12,6 +10,9 @@
     <a href="/operations/"> operations</a> 
     <a href="/invoices/"> invoices</a> 
 
+    <% } else if (isAdmin) { %>
+         <a href="/enterprise">Enterprise Details</a>
+        <a href="/employee/">Employees</a>
 
     <% } else{ %>
     <a href="/auth/sign-up">Sign up</a>

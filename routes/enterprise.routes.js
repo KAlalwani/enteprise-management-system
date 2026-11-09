@@ -7,14 +7,12 @@ const { roles, departments, features } = require("../models/globalValues");
 // READ
 router.get('/', isSignedIn ,isAdmin,  async (req,res)=>{
     const enterprise = await Enterprise.find()
-    console.log(enterprise)
     res.render('enterprise/enterprise-details.ejs', {enterprise: enterprise});
 })
 
 // CREATE
 router.post('/', async (req,res)=>{
-    console.log(req.body)
-    console.log(req.session.employee)
+    if (await Enterprise.countDocuments()) return res.status(400).send('Enterprise already exists.')
 // This creates a new entry in the database with the information from the request body
     const createdEnterprise = await Enterprise.create({ 
         name: req.body.name,
@@ -28,11 +26,11 @@ router.post('/', async (req,res)=>{
 })
 
 // UPDATE
-router.get('/:id/edit', async (req,res)=>{
+router.get('/:id/edit', isSignedIn, isAdmin, async (req,res)=>{
     const enterprise = await Enterprise.findById(req.params.id)
     res.render('enterprise/update-enterprise.ejs', {enterprise: enterprise, roles,departments, features});
 })
-router.put('/:id', async (req,res)=>{
+router.put('/:id', isSignedIn, isAdmin, async (req,res)=>{
     const updatedEnterprise = await Enterprise.findByIdAndUpdate(req.params.id, {
         name: req.body.name,
         features: req.body.features,
@@ -44,7 +42,7 @@ router.put('/:id', async (req,res)=>{
 })
 
 // DELETE
-router.delete('/:id', async (req,res)=>{
+router.delete('/:id', isSignedIn, isAdmin, async (req,res)=>{
     await Enterprise.findByIdAndDelete(req.params.id)
     res.redirect('/')
 })

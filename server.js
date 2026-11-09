@@ -1,12 +1,12 @@
 // imports
-const express = require("express") //importing express package
-const app = express() // creates a express application
-const dotenv = require("dotenv").config() //this allows me to use my .env values in this file
-const morgan = require('morgan')
-const session = require('express-session');
-const methodOverride = require('method-override')
-const {MongoStore} = require("connect-mongo");
-const connectToDB = require('./db.js')
+const express = require("express"); //importing express package
+const app = express(); // creates a express application
+const dotenv = require("dotenv").config(); //this allows me to use my .env values in this file
+const morgan = require("morgan");
+const session = require("express-session");
+const methodOverride = require("method-override");
+const { MongoStore } = require("connect-mongo");
+const connectToDB = require("./db.js");
 
 // middleware imports
 const isSignedIn = require("./middleware/is-signed-in.js");
@@ -22,14 +22,13 @@ const serviceController = require("./routes/service.routes.js");
 const supplierController = require("./routes/supplier.routes.js");
 const customerController = require("./routes/customer.routes.js");
 const operationController = require("./routes/operation.routes.js");
-const invoiceRoutes = require('./routes/invoice.routes.js');
-
+const invoiceRoutes = require("./routes/invoice.routes.js");
 
 // Middleware
-app.use(express.static('public')) // my app will serve all static files from public folder
+app.use(express.static("public")); // my app will serve all static files from public folder
 app.use(express.urlencoded({ extended: false }));
-app.use(morgan('dev'))
-app.use(methodOverride('_method'))
+app.use(morgan("dev"));
+app.use(methodOverride("_method"));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -37,47 +36,37 @@ app.use(
     saveUninitialized: true,
 
     store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    collectionName: "sessions"
+      mongoUrl: process.env.MONGODB_URI,
+      collectionName: "sessions",
     }),
 
     cookie: {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 // 1 day
-    }
-  })
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  }),
 );
-app.use(passEmployeeToView)
-
-
-
-
-
-
-
-
-
+app.use(passEmployeeToView);
 
 // Routes go here
-app.use('/auth',authController)
-app.use('/',indexController)
-app.use('/enterprise', enterpriseController)
-app.use('/employee', employeeController)
-app.use('/products', productController)
-app.use('/services', serviceController)
-app.use('/suppliers', supplierController)
-app.use('/customers', customerController)
-app.use('/operations', operationController)
-app.use('/invoices', invoiceRoutes);
-
+app.use("/auth", authController);
+app.use("/", indexController);
+app.use("/enterprise", enterpriseController);
+app.use("/employee", employeeController);
+app.use("/products", isSignedIn, productController);
+app.use("/services", isSignedIn, serviceController);
+app.use("/suppliers", isSignedIn, supplierController);
+app.use("/customers", isSignedIn, customerController);
+app.use("/operations", isSignedIn, operationController);
+app.use("/invoices", isSignedIn, invoiceRoutes);
 // connect to database and listen on Port 3000
 async function startServer() {
-    const PORT = process.env.PORT || 3000;
-    await connectToDB();
+  const PORT = process.env.PORT || 3000;
+  await connectToDB();
 
-    app.listen(PORT, () => {
-        console.log(`App is running on port ${PORT}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`App is running on port ${PORT}`);
+  });
 }
 
 startServer();

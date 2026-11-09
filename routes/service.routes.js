@@ -2,6 +2,7 @@ const router = require("express").Router()
 const Service = require("../models/Service.js");
 const Enterprise = require("../models/Enterprise.js");
 const {categoryS} = require('../models/globalValues.js')
+const isAdmin = require('../middleware/is-admin.js')
 
 // READ
 router.get('/new', async (req,res)=>{
@@ -48,7 +49,7 @@ router.put('/:id', async (req,res)=>{
 })
 
 // DELETE
-router.delete('/:id', async (req,res)=>{
+router.delete('/:id', isAdmin, async (req,res)=>{
     await Service.findByIdAndDelete(req.params.id)
     res.redirect('/')
 })
