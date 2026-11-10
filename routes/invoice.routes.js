@@ -90,7 +90,7 @@ const quantity = Number(quantities[id] ?? req.body[`quantities[${id}]`]);    if 
   if (stock.error) return fail(res, stock.error)
 
   try {
-    const invoice = await Invoice.create({
+      const invoice = await Invoice.create({
       invoiceNumber: `INV-${Date.now()}`,
       transactionType,
       customer: transactionType === 'Sale' ? customer : undefined,
@@ -103,6 +103,8 @@ const quantity = Number(quantities[id] ?? req.body[`quantities[${id}]`]);    if 
     res.redirect(`/invoices/${invoice._id}`)
   } catch (err) {
     await rollback(stock.applied)
+      console.error('Invoice creation error:', err)
+
     throw err
   }
 })

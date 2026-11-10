@@ -39,7 +39,7 @@ router.get('/:id/edit', async (req,res)=>{
     console.log(enterprise)
     const service = await Service.findById(req.params.id)
     if (!service) return next()
-    res.render('service/update-service.ejs', {service: service, enterprise:enterprise});
+    res.render('service/update-service.ejs', {service: service});
 })
 router.put('/:id', async (req,res)=>{
     const updatedService = await Service.findByIdAndUpdate(req.params.id, {

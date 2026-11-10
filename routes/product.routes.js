@@ -17,6 +17,7 @@ router.get('/', async (req,res)=>{
 })
 router.get('/:id', async (req,res)=>{
     const Foundroduct = await Product.findById(req.params.id).populate('supplier')
+    console.log(Foundroduct)
     if (!Foundroduct) return next()
     res.render('product/product-details.ejs', {product: Foundroduct});
 })

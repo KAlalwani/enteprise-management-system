@@ -15,9 +15,9 @@ router.get('/', async (req,res)=>{
     res.render('customer/customers-list.ejs', {customers: customers});
 })
 router.get('/:id', async (req,res)=>{
-    const Foundroduct = await Customer.findById(req.params.id)
+    const customer = await Customer.findById(req.params.id)
     if (!customer) return next()
-    res.render('customer/customer-details.ejs', {customer: Foundroduct});
+    res.render('customer/customer-details.ejs', {customer: customer});
 })
 
 // CREATE
