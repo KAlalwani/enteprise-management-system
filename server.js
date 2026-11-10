@@ -25,6 +25,7 @@ const operationController = require("./routes/operation.routes.js");
 const invoiceRoutes = require("./routes/invoice.routes.js");
 const staffController = require('./routes/staff.routes.js');
 const uploadController = require('./routes/upload.routes.js');
+const exportController = require('./routes/export.routes.js');
 
 // Middleware
 app.use(express.static("public")); // my app will serve all static files from public folder
@@ -63,6 +64,8 @@ app.use("/operations", isSignedIn, operationController);
 app.use("/invoices", isSignedIn, invoiceRoutes);
 app.use('/staff', staffController)
 app.use('/uploads', isSignedIn, uploadController)
+app.use('/export', isSignedIn, exportController)
+
 // 404
 app.use((req, res) => {
   res.status(404).render('error.ejs', { message: 'Page not found.' })
