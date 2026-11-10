@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>My Schedule</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <h1>My Schedule - <%= employee.name %></h1>
+
+  <h2>Upcoming Shifts</h2>
+  <% if (shifts.length) { %>
+    <ul>
+      <% shifts.forEach(s => { %>
+        <li><%= s.date.toISOString().split('T')[0] %>: <%= s.startTime %> - <%= s.endTime %> <%= s.notes || '' %></li>
+      <% }) %>
+    </ul>
+  <% } else { %><p>No upcoming shifts.</p><% } %>
+
+  <h2>My Absences</h2>
+  <% if (absences.length) { %>
+    <ul>
+      <% absences.forEach(a => { %>
+        <li><%= a.type %>: <%= a.startDate.toISOString().split('T')[0] %> to <%= a.endDate.toISOString().split('T')[0] %></li>
+      <% }) %>
+    </ul>
+  <% } else { %><p>No absences recorded.</p><% } %>
+
+  <h2>My Reviews</h2>
+  <% if (reviews.length) { %>
+    <ul>
+      <% reviews.forEach(r => { %>
+        <li><%= r.period %>: <%= r.rating %> / 5 <%= r.notes ? '- ' + r.notes : '' %></li>
+      <% }) %>
+    </ul>
+  <% } else { %><p>No reviews yet.</p><% } %>
+</body>
+</html>

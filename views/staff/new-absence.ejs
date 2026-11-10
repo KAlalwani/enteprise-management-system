@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Record Absence</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/staff-nav') %>
+  <h1>Record Absence</h1>
+  <form action="/staff/absences" method="post">
+    <label for="employee">Employee:</label>
+    <select name="employee" id="employee" required>
+      <% employees.forEach(e => { %>
+        <option value="<%= e._id %>"><%= e.name %></option>
+      <% }) %>
+    </select><br>
+    <label for="type">Type:</label>
+    <select name="type" id="type" required>
+      <% ['Sick', 'Annual Leave', 'Unpaid', 'Unexcused', 'Other'].forEach(t => { %>
+        <option value="<%= t %>"><%= t %></option>
+      <% }) %>
+    </select><br>
+    <label for="startDate">From:</label>
+    <input type="date" name="startDate" id="startDate" required><br>
+    <label for="endDate">To:</label>
+    <input type="date" name="endDate" id="endDate" required><br>
+    <label for="reason">Reason:</label>
+    <input type="text" name="reason" id="reason"><br>
+    <button type="submit">Save</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>New Review</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/staff-nav') %>
+  <h1>Add Performance Review</h1>
+  <form action="/staff/reviews" method="post">
+    <label for="employee">Employee:</label>
+    <select name="employee" id="employee" required>
+      <% employees.forEach(e => { %>
+        <option value="<%= e._id %>"><%= e.name %></option>
+      <% }) %>
+    </select><br>
+    <label for="period">Month:</label>
+    <input type="month" name="period" id="period" required><br>
+    <label for="rating">Rating (1-5):</label>
+    <input type="number" name="rating" id="rating" min="1" max="5" required><br>
+    <label for="notes">Notes:</label>
+    <textarea name="notes" id="notes"></textarea><br>
+    <button type="submit">Save</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>New Shift</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/staff-nav') %>
+  <h1>Add Shift</h1>
+  <form action="/staff/shifts" method="post">
+    <label for="employee">Employee:</label>
+    <select name="employee" id="employee" required>
+      <% employees.forEach(e => { %>
+        <option value="<%= e._id %>"><%= e.name %></option>
+      <% }) %>
+    </select><br>
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date" required><br>
+    <label for="startTime">Start:</label>
+    <input type="time" name="startTime" id="startTime" required><br>
+    <label for="endTime">End:</label>
+    <input type="time" name="endTime" id="endTime" required><br>
+    <label for="notes">Notes:</label>
+    <input type="text" name="notes" id="notes"><br>
+    <button type="submit">Add Shift</button>
+  </form>
+</body>
+</html>

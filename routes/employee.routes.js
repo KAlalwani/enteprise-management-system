@@ -5,6 +5,10 @@ const Enterprise = require("../models/Enterprise.js");
 const isSignedIn = require("../middleware/is-signed-in.js")
 const isAdmin = require("../middleware/is-admin.js")
 const bootstrapOrAdmin = require("../middleware/bootstrap-or-admin.js")
+const Shift = require("../models/Shift")
+const Absence = require("../models/Absence")
+const PerformanceReview = require("../models/PerformanceReview")
+
 
 async function generateEmployeeId() {
   while (true) {
@@ -60,6 +64,11 @@ router.put('/:id', isSignedIn, isAdmin, async (req, res) => {
 })
 
 router.delete('/:id', isSignedIn, isAdmin, async (req, res) => {
+  await Promise.all([
+    Shift.deleteMany({ employee: req.params.id }),
+    Absence.deleteMany({ employee: req.params.id }),
+    PerformanceReview.deleteMany({ employee: req.params.id })
+  ])
   await Employee.findByIdAndDelete(req.params.id)
   res.redirect('/employee')
 })

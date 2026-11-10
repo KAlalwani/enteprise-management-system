@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Shifts</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/staff-nav') %>
+  <h1>Upcoming Shifts</h1>
+  <a href="/staff/shifts/new">Add Shift</a>
+  <% if (shifts.length) { %>
+    <table border="1" cellpadding="4">
+      <tr><th>Date</th><th>Employee</th><th>Time</th><th>Notes</th><th></th></tr>
+      <% shifts.forEach(s => { %>
+        <tr>
+          <td><%= s.date.toISOString().split('T')[0] %></td>
+          <td><%= s.employee ? s.employee.name : '(deleted)' %></td>
+          <td><%= s.startTime %> - <%= s.endTime %></td>
+          <td><%= s.notes || '' %></td>
+          <td>
+            <form action="/staff/shifts/<%= s._id %>?_method=DELETE" method="post">
+              <button>Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } else { %>
+    <p>No upcoming shifts.</p>
+  <% } %>
+</body>
+</html>

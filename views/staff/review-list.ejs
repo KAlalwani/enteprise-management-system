@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Performance</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/staff-nav') %>
+  <h1>Performance Reviews</h1>
+  <a href="/staff/reviews/new">Add Review</a>
+  <% if (reviews.length) { %>
+    <table border="1" cellpadding="4">
+      <tr><th>Period</th><th>Employee</th><th>Rating</th><th>Notes</th><th></th></tr>
+      <% reviews.forEach(r => { %>
+        <tr>
+          <td><%= r.period %></td>
+          <td><%= r.employee ? r.employee.name : '(deleted)' %></td>
+          <td><%= r.rating %> / 5</td>
+          <td><%= r.notes || '' %></td>
+          <td>
+            <form action="/staff/reviews/<%= r._id %>?_method=DELETE" method="post">
+              <button>Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } else { %>
+    <p>No reviews yet.</p>
+  <% } %>
+</body>
+</html>

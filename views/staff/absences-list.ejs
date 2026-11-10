@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Absences</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/staff-nav') %>
+  <h1>Absences</h1>
+  <a href="/staff/absences/new">Record Absence</a>
+  <% if (absences.length) { %>
+    <table border="1" cellpadding="4">
+      <tr><th>Employee</th><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Reason</th><th></th></tr>
+      <% absences.forEach(a => { %>
+        <tr>
+          <td><%= a.employee ? a.employee.name : '(deleted)' %></td>
+          <td><%= a.type %></td>
+          <td><%= a.startDate.toISOString().split('T')[0] %></td>
+          <td><%= a.endDate.toISOString().split('T')[0] %></td>
+          <td><%= Math.round((a.endDate - a.startDate) / 86400000) + 1 %></td>
+          <td><%= a.reason || '' %></td>
+          <td>
+            <form action="/staff/absences/<%= a._id %>?_method=DELETE" method="post">
+              <button>Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } else { %>
+    <p>No absences recorded.</p>
+  <% } %>
+</body>
+</html>

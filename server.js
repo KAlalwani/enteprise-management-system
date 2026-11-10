@@ -23,6 +23,7 @@ const supplierController = require("./routes/supplier.routes.js");
 const customerController = require("./routes/customer.routes.js");
 const operationController = require("./routes/operation.routes.js");
 const invoiceRoutes = require("./routes/invoice.routes.js");
+const staffController = require('./routes/staff.routes.js');
 
 // Middleware
 app.use(express.static("public")); // my app will serve all static files from public folder
@@ -59,6 +60,7 @@ app.use("/suppliers", isSignedIn, supplierController);
 app.use("/customers", isSignedIn, customerController);
 app.use("/operations", isSignedIn, operationController);
 app.use("/invoices", isSignedIn, invoiceRoutes);
+app.use('/staff', staffController)
 
 // 404
 app.use((req, res) => {

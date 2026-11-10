@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Staff</title></head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/staff-nav') %>
+  <h1>Staff Overview</h1>
+  <table border="1" cellpadding="4">
+    <tr><th>Employee</th><th>Department</th><th>Absences starting this month</th><th>Avg rating</th><th>Reviews</th></tr>
+    <% rows.forEach(r => { %>
+      <tr>
+        <td><%= r.name %></td>
+        <td><%= r.department || '-' %></td>
+        <td><%= r.absences %></td>
+        <td><%= r.avgRating ?? '-' %></td>
+        <td><%= r.reviewCount %></td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+</html>
