@@ -1,46 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <%- include('./partials/navbar') %>
-    <% if(enterprise) {%>
-    <h1>Welcome <%= enterprise.name %></h1>
-    <% }else{ %>
-    <h1>Welcome to the Enterprise Management System</h1>
-    <form action="/enterprise" method="post">
-        <label for="name">Enterprise Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
+  <%- include('./partials/navbar') %>
 
-        <label for="features" id="features" name="features" >Features:</label>
-            <% features.forEach(feature => { %>
-                <input type="checkbox"  name="features" value="<%= feature %>"><%= feature %>
-            <% }) %>
-            <br>
+  <% if (!enterprise) { %>
+    <!-- ============ 1. FIRST-TIME SETUP ============ -->
+    <section class="mt-8">
+      <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Getting started</p>
+      <h1 class="mt-1">Welcome to the Enterprise Management System</h1>
+      <p class="max-w-2xl text-slate-600">Set up your enterprise in three steps. It only takes a few minutes.</p>
+    </section>
 
-        <label for="roles" id="roles" name="roles" >Roles:</label>
-            <% roles.forEach(role => { %>
-                <input type="checkbox"  name="roles" value="<%= role %>"><%= role %>
-            <% }) %>
-            <br>
+    <ol class="my-6 grid gap-4 sm:grid-cols-3">
+      <li class="stat">
+        <span class="grid size-8 place-items-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">1</span>
+        <p class="mt-3 font-semibold text-slate-900">Create your enterprise</p>
+        <p class="stat-note">Fill in the form below.</p>
+      </li>
+      <li class="stat">
+        <span class="grid size-8 place-items-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">2</span>
+        <p class="mt-3 font-semibold text-slate-900">Add the first employee</p>
+        <p class="stat-note">They become the Admin and get an employee ID.</p>
+      </li>
+      <li class="stat">
+        <span class="grid size-8 place-items-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">3</span>
+        <p class="mt-3 font-semibold text-slate-900">Sign up</p>
+        <p class="stat-note">Use the employee ID and CPR.</p>
+      </li>
+    </ol>
 
-        <label for="departments" id="departments" name="departments">Departments:</label>
-            <% departments.forEach(department => { %>
-                <input type="checkbox"  name="departments" value="<%= department %>"><%= department %>
-            <% }) %>
-            <br>
+    <form action="/enterprise" method="post" class="max-w-2xl">
+      <h2 class="mt-0">Enterprise details</h2>
 
-        <label for="salariedDate" id="salariedDate" name="salariedDate">Salaried Date:</label>
-        <input type="date" id="salariedDate" name="salariedDate" required>
-        <br>
-        <button type="submit">Create Enterprise</button>
+      <label for="name">Enterprise name</label>
+      <input type="text" id="name" name="name" required>
+
+      <fieldset class="mt-5">
+        <legend class="text-sm font-medium text-slate-700">Features</legend>
+        <div class="mt-1 grid gap-x-4 sm:grid-cols-2">
+          <% features.forEach(feature => { %>
+            <label><input type="checkbox" name="features" value="<%= feature %>"> <%= feature %></label>
+          <% }) %>
+        </div>
+      </fieldset>
+
+      <fieldset class="mt-5">
+        <legend class="text-sm font-medium text-slate-700">Roles</legend>
+        <div class="mt-1 grid gap-x-4 sm:grid-cols-2">
+          <% roles.forEach(role => { %>
+            <label><input type="checkbox" name="roles" value="<%= role %>"> <%= role %></label>
+          <% }) %>
+        </div>
+      </fieldset>
+
+      <fieldset class="mt-5">
+        <legend class="text-sm font-medium text-slate-700">Departments</legend>
+        <div class="mt-1 grid gap-x-4 sm:grid-cols-2">
+          <% departments.forEach(department => { %>
+            <label><input type="checkbox" name="departments" value="<%= department %>"> <%= department %></label>
+          <% }) %>
+        </div>
+      </fieldset>
+
+      <label for="salariedDate" class="mt-5">Salary date</label>
+      <input type="date" id="salariedDate" name="salariedDate" required>
+      <p class="stat-note">The day of the month is used as payday for salary reminders. Choose at least one feature and one role.</p>
+
+      <button type="submit">Create enterprise</button>
     </form>
+
+  <% } else if (!locals.user) { %>
+    <!-- ============ 2. SIGNED OUT ============ -->
+    <section class="mt-10 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+      <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Enterprise Management System</p>
+      <h1 class="mt-2 text-4xl"><%= enterprise.name %></h1>
+      <p class="max-w-xl text-slate-600">Invoices, stock, customers, suppliers and your team, all in one place. Sign in to continue.</p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/auth/sign-in" class="inline-flex items-center rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-brand-700 hover:text-white hover:no-underline">Sign in</a>
+        <a href="/auth/sign-up" class="inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:no-underline">Sign up</a>
+      </div>
+      <p class="mt-4 text-sm text-slate-500">New employee? Sign up with the employee ID you were given and your CPR.</p>
+    </section>
+
+  <% } else { %>
+    <!-- ============ 3. DASHBOARD ============ -->
+    <% const d = dashboard %>
+
+    <section class="mt-8 rounded-2xl bg-brand-900 p-8 text-white shadow-sm">
+      <p class="text-sm text-brand-200"><%= new Date().toDateString() %></p>
+      <h1 class="mt-1 text-white">Welcome back, <%= user.username %></h1>
+      <p class="text-brand-100">Here is how <%= enterprise.name %> is doing.</p>
+    </section>
+
+    <% if (d.lowStock > 0) { %>
+      <div class="mt-6 flex items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <span><strong><%= d.lowStock %></strong> product(s) at or below the reorder level.</span>
+        <a href="/products" class="text-amber-800 underline">View products</a>
+      </div>
     <% } %>
-    
+
+    <div class="my-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <a href="/products" class="stat">
+        <p class="stat-label">Products</p>
+        <p class="stat-value"><%= d.productCount %></p>
+        <p class="stat-note"><%= d.lowStock %> low on stock</p>
+      </a>
+      <a href="/customers" class="stat">
+        <p class="stat-label">Customers</p>
+        <p class="stat-value"><%= d.customerCount %></p>
+        <p class="stat-note">Registered</p>
+      </a>
+      <a href="/invoices" class="stat">
+        <p class="stat-label">Outstanding</p>
+        <p class="stat-value"><%= d.owedAmount.toFixed(3) %> <span class="text-sm font-medium text-slate-500">BHD</span></p>
+        <p class="stat-note"><%= d.owedCount %> unpaid sale invoice(s)</p>
+      </a>
+      <a href="/invoices" class="stat">
+        <p class="stat-label">Sales this month</p>
+        <p class="stat-value"><%= d.salesMonth.toFixed(3) %> <span class="text-sm font-medium text-slate-500">BHD</span></p>
+        <p class="stat-note">Invoiced, not cancelled</p>
+      </a>
+    </div>
+
+    <% if (d.admin) { %>
+      <h2>Team</h2>
+      <div class="mb-6 mt-3 grid gap-4 sm:grid-cols-3">
+        <a href="/employee" class="stat">
+          <p class="stat-label">Employees</p>
+          <p class="stat-value"><%= d.admin.employeeCount %></p>
+        </a>
+        <a href="/staff/shifts" class="stat">
+          <p class="stat-label">Shifts today</p>
+          <p class="stat-value"><%= d.admin.shiftsToday %></p>
+        </a>
+        <a href="/reminders" class="stat">
+          <p class="stat-label">Next payday</p>
+          <% if (d.admin.salary) { %>
+            <p class="stat-value"><%= d.admin.salary.payDate.toISOString().split('T')[0] %></p>
+            <p class="stat-note"><%= d.admin.salary.daysUntil === 0 ? 'Today' : 'In ' + d.admin.salary.daysUntil + ' day(s)' %></p>
+          <% } else { %>
+            <p class="stat-value">-</p>
+          <% } %>
+        </a>
+      </div>
+    <% } %>
+
+    <h2>Quick actions</h2>
+    <div class="mb-8 mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <a href="/invoices/new" class="tile">New sale or purchase</a>
+      <a href="/products/new" class="tile">Add product</a>
+      <a href="/customers/new" class="tile">Add customer</a>
+      <a href="/invoices" class="tile">All invoices</a>
+      <a href="/staff/me" class="tile">My schedule</a>
+      <% if (isAdmin) { %>
+        <a href="/staff" class="tile">Staff overview</a>
+        <a href="/reminders" class="tile">Reminders</a>
+        <a href="/employee" class="tile">Employees</a>
+      <% } %>
+    </div>
+
+    <h2>Latest invoices</h2>
+    <% if (d.recent.length) { %>
+      <table>
+        <tr><th>Invoice</th><th>Type</th><th>Customer / Supplier</th><th>Date</th><th>Total (BHD)</th><th>Status</th></tr>
+        <% d.recent.forEach(inv => { %>
+          <%
+            const badge = inv.status === 'Cancelled' ? ['badge-slate', 'Cancelled']
+              : inv.paymentStatus === 'Paid' ? ['badge-green', 'Paid']
+              : inv.paymentStatus === 'Partially Paid' ? ['badge-amber', 'Partially paid']
+              : ['badge-red', inv.paymentStatus || 'Unpaid']
+          %>
+          <tr>
+            <td><a href="/invoices/<%= inv._id %>"><%= inv.invoiceNumber %></a></td>
+            <td><%= inv.transactionType %></td>
+            <td><%= (inv.customer && inv.customer.name) || (inv.supplier && inv.supplier.name) || '-' %></td>
+            <td><%= inv.transactionDate ? inv.transactionDate.toISOString().split('T')[0] : '' %></td>
+            <td><%= Number(inv.totalAmount).toFixed(3) %></td>
+            <td><span class="badge <%= badge[0] %>"><%= badge[1] %></span></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } else { %>
+      <p class="text-slate-500">No invoices yet. <a href="/invoices/new">Create the first one</a>.</p>
+    <% } %>
+  <% } %>
 </body>
 </html>
