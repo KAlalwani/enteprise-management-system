@@ -42,7 +42,7 @@ router.post('/', bootstrapOrAdmin(Employee), async (req, res) => {
 
 router.get('/:id', isSignedIn, isAdmin, async (req, res) => {
   const foundEmployee = await Employee.findById(req.params.id)
-    if (!employee) return next()
+    if (!foundEmployee) return next()
   res.render('employee/employee-details.ejs', { employee: foundEmployee })
 })
 

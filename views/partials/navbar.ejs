@@ -1,25 +1,25 @@
 <nav>
-    
     <a href="/">Homepage</a>
-    <% if (user){ %>
-    <a href="/auth/sign-out">Logout</a>
-    <a href="/products/"> products</a>
-    <a href="/services/"> services</a> 
-     <a href="/suppliers/"> suppliers</a> 
-     <a href="/customers/"> customers</a> 
-    <a href="/operations/"> operations</a> 
-    <a href="/invoices/"> invoices</a> 
-    <a href="/staff/me">My Schedule</a>
 
-    <% } else if (isAdmin) { %>
-         <a href="/enterprise">Enterprise Details</a>
-        <a href="/employee/">Employees</a>
-        <a href="/staff">Staff</a>
+    <% if (user) { %>
+        <a href="/auth/sign-out">Logout</a>
 
-    <% } else{ %>
-    <a href="/auth/sign-up">Sign up</a>
-    <a href="/auth/sign-in">Login</a>
+        <% if (user.role === 'Admin') { %>
+            <a href="/enterprise">Enterprise Details</a>
+            <a href="/employee/">Employees</a>
+            <a href="/staff">Staff</a>
+        <% } %>
 
+        <a href="/products/">Products</a>
+        <a href="/services/">Services</a>
+        <a href="/suppliers/">Suppliers</a>
+        <a href="/customers/">Customers</a>
+        <a href="/operations/">Operations</a>
+        <a href="/invoices/">Invoices</a>
+        <a href="/staff/me">My Schedule</a>
+
+    <% } else { %>
+        <a href="/auth/sign-up">Sign up</a>
+        <a href="/auth/sign-in">Login</a>
     <% } %>
-    
 </nav>

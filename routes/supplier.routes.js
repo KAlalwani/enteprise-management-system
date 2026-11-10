@@ -15,7 +15,7 @@ router.get('/', async (req,res)=>{
 router.get('/:id', async (req,res)=>{
     const foundSupplier = await Supplier.findById(req.params.id)
     if (!foundSupplier) return next()
-    res.render('supplier/supplier-details.ejs', {supplier: Foundroduct});
+    res.render('supplier/supplier-details.ejs', {supplier: foundSupplier});
 })
 
 // CREATE
