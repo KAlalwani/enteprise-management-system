@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-        <%- include('../partials/navbar') %>
-    <h1>Products List</h1>
-    <% if(products.length > 0) { %>
-        <% products.forEach(product => { %>
-        <p>Product Name: <%= product.name %></p>
-        <a href="/products/<%= product._id %>">view details</a>
-        <br>
-        <% }); %>
-    <% } else { %>
-        <p>No product details available.</p>
-    <% } %>
-      <a href="/products/new">Add New Product</a>
+  <%- include('../partials/navbar') %>
+
+  <div class="page-header">
+    <h1>Products</h1>
+    <div class="page-actions">
       <a href="/export/products/xlsx">Export to Excel</a>
-<a href="/export/products/pdf">Export to PDF</a>
-    </body>
+      <a href="/export/products/pdf">Export to PDF</a>
+      <a href="/products/new">Add New Product</a>
+    </div>
+  </div>
+
+  <% if (products.length > 0) { %>
+    <p class="text-sm text-slate-500"><%= products.length %> product(s)</p>
+    <div class="list">
+      <% products.forEach(product => { %>
+        <a href="/products/<%= product._id %>" class="list-row">
+          <span class="avatar">
+            <% if (product.photo) { %><img src="/uploads/<%= product.photo %>" alt=""><% } else { %><%= product.name.charAt(0).toUpperCase() %><% } %>
+          </span>
+          <div class="list-main">
+            <span class="list-title"><%= product.name %></span>
+            <div class="list-meta">
+              <span><%= Number(product.price).toFixed(3) %> BHD</span>
+              <span>Stock: <%= product.stock %></span>
+              <% if (product.category) { %><span><%= product.category %></span><% } %>
+            </div>
+          </div>
+          <% if (product.stock <= product.reorderLevel) { %><span class="badge badge-red">Low stock</span><% } %>
+          <span class="text-slate-400">&rsaquo;</span>
+        </a>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty">
+      <p>No products yet.</p>
+      <p><a href="/products/new">Add the first product</a></p>
+    </div>
+  <% } %>
+</body>
 </html>

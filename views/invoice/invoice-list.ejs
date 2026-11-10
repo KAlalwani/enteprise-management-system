@@ -1,46 +1,54 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invoices</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
   <%- include('../partials/navbar') %>
 
-  <h1>Invoices</h1>
+  <div class="page-header">
+    <h1>Invoices</h1>
+    <div class="page-actions">
+      <a href="/export/invoices/xlsx">Export to Excel</a>
+      <a href="/invoices/new">Create New Invoice</a>
+    </div>
+  </div>
 
-  <a href="/invoices/new">Create New Invoice</a>
-
-  <% invoices.forEach(invoice => { %>
-    <hr>
-
-    <p>Invoice Number: <%= invoice.invoiceNumber %></p>
-
-    <p>Type: <%= invoice.transactionType %></p>
-    <p>Status: <%= invoice.status %></p>
-    <p>
-      Customer:
-      <%= invoice.customer ? invoice.customer.name : 'N/A' %>
-    </p>
-
-    <p>
-      Supplier:
-      <%= invoice.supplier ? invoice.supplier.name : 'N/A' %>
-    </p>
-
-    <p>Total: <%= invoice.totalAmount %> BHD</p>
-
-    <p>Payment Status: <%= invoice.paymentStatus %></p>
-
-    <a href="/invoices/<%= invoice._id %>">View Invoice</a>
-    <a href="/export/invoices/xlsx">Export to Excel</a>
-
-  <% }) %>
-
+  <% if (invoices.length > 0) { %>
+    <p class="text-sm text-slate-500"><%= invoices.length %> invoice(s)</p>
+    <div class="list">
+      <% invoices.forEach(invoice => { %>
+        <%
+          const badge = invoice.status === 'Cancelled' ? ['badge-slate', 'Cancelled']
+            : invoice.paymentStatus === 'Paid' ? ['badge-green', 'Paid']
+            : invoice.paymentStatus === 'Partially Paid' ? ['badge-amber', 'Partially paid']
+            : ['badge-red', invoice.paymentStatus || 'Unpaid']
+        %>
+        <a href="/invoices/<%= invoice._id %>" class="list-row">
+          <div class="list-main">
+            <span class="list-title"><%= invoice.invoiceNumber %></span>
+            <div class="list-meta">
+              <span><%= invoice.transactionType %></span>
+              <span><%= (invoice.customer && invoice.customer.name) || (invoice.supplier && invoice.supplier.name) || 'N/A' %></span>
+              <% if (invoice.transactionDate) { %><span><%= invoice.transactionDate.toISOString().split('T')[0] %></span><% } %>
+            </div>
+          </div>
+          <div class="list-end">
+            <div class="font-semibold text-slate-900"><%= Number(invoice.totalAmount).toFixed(3) %> BHD</div>
+            <span class="badge <%= badge[0] %>"><%= badge[1] %></span>
+          </div>
+          <span class="text-slate-400">&rsaquo;</span>
+        </a>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty">
+      <p>No invoices yet.</p>
+      <p><a href="/invoices/new">Create the first invoice</a></p>
+    </div>
+  <% } %>
 </body>
 </html>

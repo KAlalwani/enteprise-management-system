@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customers</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-        <%- include('../partials/navbar') %>
-    <h1>Customers List</h1>
-    <% if(customers.length > 0) { %>
-        <% customers.forEach(customer => { %>
-        <p>Customer Name: <%= customer.name %></p>
-        <a href="/customers/<%= customer._id %>">view details</a>
-        <br>
-        <% }); %>
-    <% } else { %>
-        <p>No customer details available.</p>
-    <% } %>
+  <%- include('../partials/navbar') %>
+
+  <div class="page-header">
+    <h1>Customers</h1>
+    <div class="page-actions">
       <a href="/customers/new">Add New Customer</a>
-    </body>
+    </div>
+  </div>
+
+  <% if (customers.length > 0) { %>
+    <p class="text-sm text-slate-500"><%= customers.length %> customer(s)</p>
+    <div class="list">
+      <% customers.forEach(customer => { %>
+        <a href="/customers/<%= customer._id %>" class="list-row">
+          <span class="avatar"><%= customer.name.charAt(0).toUpperCase() %></span>
+          <div class="list-main">
+            <span class="list-title"><%= customer.name %></span>
+            <div class="list-meta">
+              <span><%= customer.phone %></span>
+              <span><%= customer.email %></span>
+            </div>
+          </div>
+          <% if (customer.whatsappOptIn) { %><span class="badge badge-green">WhatsApp</span><% } %>
+          <span class="text-slate-400">&rsaquo;</span>
+        </a>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty">
+      <p>No customers yet.</p>
+      <p><a href="/customers/new">Add the first customer</a></p>
+    </div>
+  <% } %>
+</body>
 </html>

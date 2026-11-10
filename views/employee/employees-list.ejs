@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employees</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-        <%- include('../partials/navbar') %>
-    <h1>Employee details</h1>
-    <% if(employees.length > 0) { %>
-        <% employees.forEach(employee => { %>
-        <p>Employee Name: <%= employee.name %></p>
-        <p>Roles: <%= employee.role%></p>
-           <a href="/employee/<%= employee._id %>">view Employee</a>
+  <%- include('../partials/navbar') %>
 
-       <% }); %>
-    <% } else { %>
-        <p>No employee details available.</p>
-    <% } %>
+  <div class="page-header">
+    <h1>Employees</h1>
+    <div class="page-actions">
+      <% if (isAdmin) { %>
+        <a href="/export/employees/xlsx">Export to Excel</a>
+        <a href="/employee/new">Add New Employee</a>
+      <% } %>
+    </div>
+  </div>
 
-    </form>
-    <br>
-        <% if(isAdmin) {%>
-          <a href="/employee/new">Add New Employee</a>
-          <a href="/export/employees/xlsx">Export to Excel</a>
-          <% } %>
-
-    </body>
+  <% if (employees.length > 0) { %>
+    <p class="text-sm text-slate-500"><%= employees.length %> employee(s)</p>
+    <div class="list">
+      <% employees.forEach(employee => { %>
+        <a href="/employee/<%= employee._id %>" class="list-row">
+          <span class="avatar">
+            <% if (employee.photo) { %><img src="/uploads/<%= employee.photo %>" alt=""><% } else { %><%= employee.name.charAt(0).toUpperCase() %><% } %>
+          </span>
+          <div class="list-main">
+            <span class="list-title"><%= employee.name %></span>
+            <div class="list-meta">
+              <% if (employee.department) { %><span><%= employee.department %></span><% } %>
+              <span><%= employee.email %></span>
+            </div>
+          </div>
+          <span class="badge <%= employee.role === 'Admin' ? 'badge-brand' : 'badge-slate' %>"><%= employee.role %></span>
+          <span class="text-slate-400">&rsaquo;</span>
+        </a>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty"><p>No employees yet.</p></div>
+  <% } %>
+</body>
 </html>

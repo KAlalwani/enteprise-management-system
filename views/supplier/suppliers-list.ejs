@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supplier</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suppliers</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-        <%- include('../partials/navbar') %>
-    <h1>Suppliers List</h1>
-    <% if(suppliers.length > 0) { %>
-        <% suppliers.forEach(supplier => { %>
-        <p>Supplier Name: <%= supplier.name %></p>
-        <a href="/suppliers/<%= supplier._id %>">view details</a>
-        <br>
-        <% }); %>
-    <% } else { %>
-        <p>No supplier details available.</p>
-    <% } %>
+  <%- include('../partials/navbar') %>
+
+  <div class="page-header">
+    <h1>Suppliers</h1>
+    <div class="page-actions">
       <a href="/suppliers/new">Add New Supplier</a>
-    </body>
+    </div>
+  </div>
+
+  <% if (suppliers.length > 0) { %>
+    <p class="text-sm text-slate-500"><%= suppliers.length %> supplier(s)</p>
+    <div class="list">
+      <% suppliers.forEach(supplier => { %>
+        <a href="/suppliers/<%= supplier._id %>" class="list-row">
+          <span class="avatar"><%= supplier.name.charAt(0).toUpperCase() %></span>
+          <div class="list-main">
+            <span class="list-title"><%= supplier.name %></span>
+            <div class="list-meta">
+              <span><%= supplier.email %></span>
+              <span><%= supplier.phoneNumber %></span>
+            </div>
+          </div>
+          <span class="text-slate-400">&rsaquo;</span>
+        </a>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty">
+      <p>No suppliers yet.</p>
+      <p><a href="/suppliers/new">Add the first supplier</a></p>
+    </div>
+  <% } %>
+</body>
 </html>
