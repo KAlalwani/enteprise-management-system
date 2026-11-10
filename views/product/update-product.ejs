@@ -8,7 +8,7 @@
 <body>
     <%- include('../partials/navbar') %>
     <h1>Update</h1>
-    <form action="/products/<%= product._id %>?_method=PUT" method="post">
+    <form action="/products/<%= product._id %>?_method=PUT" method="post" enctype="multipart/form-data">
         <labal for="name">Product Name:</label>
         <input type="text" id="name" name="name" value="<%= product.name %>" required>
         <br>
@@ -48,7 +48,10 @@
         <option value="">No categories available</option>
     <% } %>
 </select><br>
-
+<label for="photo">Photo:</label>
+<input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp">
+<% if (product.photo) { %><img src="/uploads/<%= product.photo %>" width="100" alt=""><br><% } %>
+<br>
         <button type="submit">Update Product</button>
     </form>
     

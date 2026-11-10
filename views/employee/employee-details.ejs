@@ -8,6 +8,7 @@
 <body>
         <%- include('../partials/navbar') %>
     <h1>Employee details</h1>
+    <% if (employee.photo) { %><img src="/uploads/<%= employee.photo %>" alt="<%= employee.name %>" width="150"><% } %>
         <p>Employee Name: <%= employee.name %></p>
         <p>Roles: <%= employee.role%></p>
         <p>Departments: <%= employee.department%></p>

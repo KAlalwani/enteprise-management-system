@@ -7,6 +7,9 @@ const productSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
+  photo: { 
+    type: String 
+  },
   supplier: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Supplier',

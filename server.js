@@ -24,6 +24,7 @@ const customerController = require("./routes/customer.routes.js");
 const operationController = require("./routes/operation.routes.js");
 const invoiceRoutes = require("./routes/invoice.routes.js");
 const staffController = require('./routes/staff.routes.js');
+const uploadController = require('./routes/upload.routes.js');
 
 // Middleware
 app.use(express.static("public")); // my app will serve all static files from public folder
@@ -61,7 +62,7 @@ app.use("/customers", isSignedIn, customerController);
 app.use("/operations", isSignedIn, operationController);
 app.use("/invoices", isSignedIn, invoiceRoutes);
 app.use('/staff', staffController)
-
+app.use('/uploads', isSignedIn, uploadController)
 // 404
 app.use((req, res) => {
   res.status(404).render('error.ejs', { message: 'Page not found.' })
@@ -81,6 +82,9 @@ app.use((err, req, res, next) => {
   } else if (err.name === 'CastError') {
     status = 404
     message = 'Not found.'
+    } else if (err.name === 'MulterError' || err.status === 400) {
+    status = 400
+    message = err.code === 'LIMIT_FILE_SIZE' ? 'Image must be 2MB or smaller.' : err.message
   } else {
     console.error(err)
   }

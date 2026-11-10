@@ -17,6 +17,9 @@ const employeeSchema = new mongoose.Schema({
     unique: true, 
     sparse: true
   },
+  photo: { 
+    type: String 
+  },
   role: {
     type: String,
     enum: roles,

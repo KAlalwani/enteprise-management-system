@@ -8,7 +8,7 @@
 <body>
     <%- include('../partials/navbar') %>
     <h1>Create a new Employee!</h1>
-    <form action="/employee" method="post">
+    <form action="/employee" method="post" enctype="multipart/form-data">
       <label for="role">Role:</label>
       <select name="role" id="role">
         <% if (enterprise) { %>
@@ -43,6 +43,9 @@
       <input type="text" name="phoneNumber" id="phoneNumber" /><br>
       <label for="experience" >Experience:</label>
       <input type="number" name="experience" id="experience" /><br>
+      <label for="photo">Photo:</label>
+<input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp">
+<br>
       <button type="submit">create</button>
     </form>
 </body>

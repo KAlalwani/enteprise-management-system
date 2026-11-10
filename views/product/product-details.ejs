@@ -8,6 +8,7 @@
 <body>
         <%- include('../partials/navbar') %>
     <h1>Product details</h1>
+    <% if (product.photo) { %><img src="/uploads/<%= product.photo %>" alt="<%= product.name %>" width="150"><% } %>
         <p>Product Name: <%= product.name %></p>
         <p>supplier: <%= product.supplier.name%></p>
         <p>stock: <%= product.stock%></p>
