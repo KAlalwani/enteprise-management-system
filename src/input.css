@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@source "../views";
+
+@theme {
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  /* Accent color: change these values to re-theme the whole app */
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-900: #312e81;
+}
+
+:root {
+  --page-max: 64rem;
+  --gutter: max(1rem, calc((100vw - var(--page-max)) / 2));
+}
+
+@layer base {
+  html { @apply scroll-smooth; }
+  body {
+    @apply bg-slate-50 pb-16 font-sans text-slate-700 antialiased;
+    padding-inline: var(--gutter);
+  }
+  ::selection { @apply bg-brand-200 text-brand-900; }
+
+  h1 { @apply mb-4 mt-8 text-3xl font-semibold tracking-tight text-slate-900; }
+  h2 { @apply mb-3 mt-8 text-xl font-semibold tracking-tight text-slate-900; }
+  h3 { @apply mb-2 mt-5 text-base font-semibold text-slate-900; }
+  p  { @apply my-1.5 leading-relaxed; }
+  ul { @apply my-3 list-disc space-y-1 pl-6; }
+  hr { @apply my-4 border-slate-200; }
+  a  { @apply font-medium text-brand-600 hover:text-brand-700 hover:underline; }
+
+  /* top bar */
+  nav {
+    @apply sticky top-0 z-20 mb-6 flex flex-wrap items-center gap-x-1 gap-y-1 border-b border-slate-200 bg-white/90 py-2 backdrop-blur;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+  }
+  nav ul { @apply m-0 flex list-none flex-wrap items-center gap-1 space-y-0 p-0; }
+  nav a { @apply rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 hover:no-underline; }
+  nav a.brand { @apply mr-3 px-0 text-base font-semibold text-slate-900 hover:bg-transparent; }
+  nav a.active { @apply bg-brand-50 text-brand-700; }
+  nav .spacer { @apply ml-auto; }
+
+  /* forms become cards */
+  form:has(input:not([type="hidden"]), select, textarea) {
+    @apply my-5 max-w-xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm;
+  }
+  form:has(.product-row) { @apply max-w-2xl; }
+  form br { display: none; }
+
+  label { @apply mt-3 block text-sm font-medium text-slate-700; }
+  label:has(> input[type="checkbox"], > input[type="radio"]) { @apply mt-2 flex items-center gap-2 font-normal; }
+
+  input:not([type="checkbox"], [type="radio"], [type="file"], [type="hidden"], [type="submit"]),
+  select, textarea {
+    @apply mt-1 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-100;
+  }
+  textarea { @apply min-h-28; }
+  input[type="checkbox"], input[type="radio"] { @apply size-4 accent-brand-600; }
+  input[type="file"] {
+    @apply mt-1 block w-full text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-brand-700;
+  }
+
+  /* invoice form rows */
+  .product-row { @apply my-2 flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2; }
+  div.product-row label { @apply mt-0 flex-1; }
+  .product-row input[type="number"] { @apply mt-0 w-24; }
+
+  /* buttons */
+  button, input[type="submit"] {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-200;
+  }
+  form:has(input:not([type="hidden"]), select, textarea) button[type="submit"] { @apply mt-5; }
+  form[action*="_method=DELETE"] { @apply inline-block; }
+  form[action*="_method=DELETE"] button { @apply bg-white text-red-600 shadow-none ring-1 ring-red-200 hover:bg-red-50; }
+
+  /* links styled as buttons, no markup changes needed */
+  a[href$="/new"] {
+    @apply my-1 mr-2 inline-flex items-center rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-brand-700 hover:text-white hover:no-underline;
+  }
+  a[href^="/export/"], a[href$="/edit"] {
+    @apply my-1 mr-2 inline-flex items-center rounded-lg bg-white px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:no-underline;
+  }
+
+  /* tables */
+  table { @apply my-5 w-full border-separate border-spacing-0 overflow-hidden rounded-xl border border-slate-200 bg-white text-sm shadow-sm; }
+  th { @apply border-b border-slate-200 bg-slate-50 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500; }
+  td { @apply border-b border-slate-100 px-4 py-3 align-middle text-slate-700; }
+  tr:last-child > td { @apply border-b-0; }
+  tr:hover > td { @apply bg-slate-50; }
+  @media (max-width: 40rem) {
+    table { display: block; overflow-x: auto; white-space: nowrap; }
+  }
+
+  img { @apply my-3 rounded-xl border border-slate-200 object-cover shadow-sm; }
+}
+
+/* optional: <span class="badge badge-green">Paid</span> */
+@layer components {
+  .badge { @apply inline-block rounded-full px-2.5 py-0.5 text-xs font-medium; }
+  .badge-green { @apply bg-emerald-50 text-emerald-700; }
+  .badge-amber { @apply bg-amber-50 text-amber-700; }
+  .badge-red { @apply bg-red-50 text-red-700; }
+}

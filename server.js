@@ -21,7 +21,6 @@ const productController = require("./routes/product.routes.js");
 const serviceController = require("./routes/service.routes.js");
 const supplierController = require("./routes/supplier.routes.js");
 const customerController = require("./routes/customer.routes.js");
-const operationController = require("./routes/operation.routes.js");
 const invoiceRoutes = require("./routes/invoice.routes.js");
 const staffController = require('./routes/staff.routes.js');
 const uploadController = require('./routes/upload.routes.js');
@@ -60,7 +59,6 @@ app.use("/products", isSignedIn, productController);
 app.use("/services", isSignedIn, serviceController);
 app.use("/suppliers", isSignedIn, supplierController);
 app.use("/customers", isSignedIn, customerController);
-app.use("/operations", isSignedIn, operationController);
 app.use("/invoices", isSignedIn, invoiceRoutes);
 app.use('/staff', staffController)
 app.use('/uploads', isSignedIn, uploadController)

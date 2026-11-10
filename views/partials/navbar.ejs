@@ -1,25 +1,31 @@
+<%
+  const path = typeof currentPath === 'string' ? currentPath : ''
+  const at = prefix => (path === prefix || path.startsWith(prefix + '/')) ? 'active' : ''
+%>
 <nav>
-    <a href="/">Homepage</a>
+  <a href="/" class="brand">Enterprise Manager</a>
 
-    <% if (user) { %>
-        <a href="/auth/sign-out">Logout</a>
+  <% if (locals.user) { %>
+    <a href="/products" class="<%= at('/products') %>">Products</a>
+    <a href="/services" class="<%= at('/services') %>">Services</a>
+    <a href="/suppliers" class="<%= at('/suppliers') %>">Suppliers</a>
+    <a href="/customers" class="<%= at('/customers') %>">Customers</a>
+    <a href="/invoices" class="<%= at('/invoices') %>">Invoices</a>
+    <a href="/staff/me" class="<%= path === '/staff/me' ? 'active' : '' %>">My Schedule</a>
 
-        <% if (user.role === 'Admin') { %>
-            <a href="/enterprise">Enterprise Details</a>
-            <a href="/employee/">Employees</a>
-            <a href="/staff">Staff</a>
-        <% } %>
-
-        <a href="/products/">Products</a>
-        <a href="/services/">Services</a>
-        <a href="/suppliers/">Suppliers</a>
-        <a href="/customers/">Customers</a>
-        <a href="/operations/">Operations</a>
-        <a href="/invoices/">Invoices</a>
-        <a href="/staff/me">My Schedule</a>
-
-    <% } else { %>
-        <a href="/auth/sign-up">Sign up</a>
-        <a href="/auth/sign-in">Login</a>
+    <% if (locals.isAdmin) { %>
+      <a href="/staff" class="<%= (at('/staff') && path !== '/staff/me') ? 'active' : '' %>">Staff</a>
+      <a href="/employee" class="<%= at('/employee') %>">Employees</a>
+      <a href="/enterprise" class="<%= at('/enterprise') %>">Enterprise</a>
+      <a href="/reminders" class="<%= at('/reminders') %>">Reminders</a>
     <% } %>
+
+    <span class="spacer"></span>
+    <span class="text-sm text-slate-500"><%= user.username %></span>
+    <a href="/auth/sign-out">Sign out</a>
+  <% } else { %>
+    <span class="spacer"></span>
+    <a href="/auth/sign-in">Sign in</a>
+    <a href="/auth/sign-up">Sign up</a>
+  <% } %>
 </nav>
